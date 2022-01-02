@@ -1,9 +1,11 @@
 import { ReactElement } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { Game } from './containers/game/game';
+import { Home } from './containers/home/home';
 
 export const Router = (): ReactElement => (
 	<Routes>
-		<Route path="/" element={<div>Home</div>} />
-		<Route path="/game" element={<div>Game</div>} />
+		<Route path="/" element={<Home />} />
+		<Route path="/game" element={<Game />} />
 	</Routes>
 );

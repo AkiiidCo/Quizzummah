@@ -1,19 +1,15 @@
+import { WSStatus } from '../managers/ws.manager';
+
 const auth: {
 	signedIn: boolean;
 	token: string;
 	email: string;
 	username: string;
-	host: string;
-	port: number;
-	premium: boolean;
 } = {
 	signedIn: false,
 	token: '',
 	email: '',
 	username: '',
-	host: '',
-	port: 39222,
-	premium: false,
 };
 
 const settings: {
@@ -22,4 +18,20 @@ const settings: {
 	language: 'en',
 };
 
-export default { auth, settings };
+const game: {
+	host: boolean;
+	gameToken: string;
+	gameId: string;
+	room: string;
+	username: string;
+	status: WSStatus;
+} = {
+	host: false,
+	gameToken: '',
+	gameId: '',
+	room: '',
+	username: '',
+	status: WSStatus.DISCONNECTED,
+};
+
+export default { auth, settings, game };

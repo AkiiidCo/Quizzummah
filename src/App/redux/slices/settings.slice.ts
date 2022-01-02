@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import template from '../template';
 
-const authSlice = createSlice({
+const settingsSlice = createSlice({
 	name: 'settings',
 	initialState: { ...template.settings },
 	reducers: {
@@ -11,6 +11,6 @@ const authSlice = createSlice({
 	},
 });
 
-export const { changeLanguage } = authSlice.actions;
+export const { changeLanguage } = settingsSlice.actions;
 
-export default authSlice.reducer;
+export default settingsSlice.reducer;
