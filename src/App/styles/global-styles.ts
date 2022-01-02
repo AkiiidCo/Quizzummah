@@ -6,6 +6,7 @@ export const GlobalColors: Record<string, string> = {
 	white2: '#ffffff',
 	white3: '#ffffff',
 	darkBlue: '#101443',
+	darkBlue60: '#70728E',
 	white: '#FFFFFF',
 	lightBlue: '#2992CE',
 	lightBlueSeparator: '#C9E4F3',

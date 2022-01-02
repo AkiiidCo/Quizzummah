@@ -28,9 +28,13 @@ import { ReactComponent as Volumedown } from './volumeDown.svg';
 import { ReactComponent as Voulueup } from './voulueUp.svg';
 import { ReactComponent as Warning } from './warning.svg';
 import { ReactComponent as Wronganswer } from './wrongAnswer.svg';
+import { ReactComponent as BismiAllah } from './bismiAllah.svg';
 import { ReactComponent as Pattern } from './pattern.svg';
+import { ReactComponent as LogoQuizzUmmah } from './logoQuizzUmmah.svg';
 
 export default {
+	BismiAllah,
+	LogoQuizzUmmah,
 	Amama,
 	Bronzemedal,
 	Camel,

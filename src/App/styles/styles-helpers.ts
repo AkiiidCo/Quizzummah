@@ -132,3 +132,27 @@ export const ellipse: any = css`
 	display: flex;
 	align-items: center;
 `;
+export const container: any = css`
+	max-width: 900px;
+	width: 100%;
+	margin: 0 auto;
+`;
+export const before: any = css`
+	&::before {
+		content: '';
+		display: block;
+	}
+`;
+export const bfter: any = css`
+	&::after {
+		content: '';
+		display: block;
+	}
+`;
+export const btn_default: any = css`
+	cursor: pointer;
+	border: none;
+	box-shadow: none;
+	background-color: transparent;
+	user-select: none;
+`;

@@ -29,7 +29,7 @@ function App() {
 export default App;
 
 export const Body: any = styled.div`
-	background: ${GlobalColors.newPurple};
+	/* background: ${GlobalColors.newPurple}; */
 	width: 100%;
 	font-size: 16px;
 	font-family: 'Roboto', sans-serif;
