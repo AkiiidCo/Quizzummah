@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { updateGame } from '../../redux/slices/game.slice';
 import { useAppDispatch } from '../../redux/store';
 import QRequest from '../../services/QRequest';
+import Icons from '../../Images';
 
 export const Home = (): ReactElement => {
 	const dispatch = useAppDispatch();
@@ -49,6 +50,7 @@ export const Home = (): ReactElement => {
 					</div>
 				</div>
 			</div>
+			<Icons.Masjid />
 		</div>
 	);
 };

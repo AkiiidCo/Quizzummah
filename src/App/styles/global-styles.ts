@@ -5,6 +5,17 @@ export const GlobalColors: Record<string, string> = {
 	white1: '#ffffff',
 	white2: '#ffffff',
 	white3: '#ffffff',
+	darkBlue: '#101443',
+	white: '#FFFFFF',
+	lightBlue: '#2992CE',
+	lightBlueSeparator: '#C9E4F3',
+	variationRed: '#FF5555',
+	variationPurple: '#C30098',
+	variationBlue: '#55E0FF',
+	variationDarkBlue: '#55ADFF',
+	variationGreen: '#00DA71',
+	answerGreen: '#75C6A4',
+	answerRed: '#FA7E7E',
 };
 
 export const Styles: Record<string, string> = {
