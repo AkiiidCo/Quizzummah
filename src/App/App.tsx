@@ -32,10 +32,8 @@ export const Body: any = styled.div`
 	/* background: ${GlobalColors.newPurple}; */
 	width: 100%;
 	font-size: 16px;
-	font-family: 'Roboto', sans-serif;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
 	-webkit-app-region: no-drag !important;
 
 	* {

@@ -134,7 +134,6 @@ export const ellipse: any = css`
 `;
 export const container: any = css`
 	max-width: 900px;
-	width: 100%;
 	margin: 0 auto;
 `;
 export const before: any = css`
@@ -155,4 +154,11 @@ export const btn_default: any = css`
 	box-shadow: none;
 	background-color: transparent;
 	user-select: none;
+`;
+export const input_default: any = css`
+	border: 2px solid ${GlobalColors.darkBlue90};
+	padding: 16px;
+	font-size: 1rem;
+	border-radius: 50px;
+	outline-color: ${GlobalColors.lightBlue};
 `;
