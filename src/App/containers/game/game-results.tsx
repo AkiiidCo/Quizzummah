@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
 
-export const GameResultsScreen = (): ReactElement => {
+export const GameResultsScreen = ({ gameState }: { gameState: any }): ReactElement => {
 	return <div>Game Results Screen</div>;
 };

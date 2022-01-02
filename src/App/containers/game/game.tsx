@@ -20,6 +20,8 @@ export const Game = (): ReactElement => {
 	const host = useAppSelector((state: RootState) => state.game.host);
 	const gameToken = useAppSelector((state: RootState) => state.game.gameToken);
 	const [screen, setScreen] = useState<GameScreen>(GameScreen.WAIT);
+	const [question, setQuestion] = useState<any>(null);
+	const [gameState, setGameState] = useState<any>(null);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -39,8 +41,14 @@ export const Game = (): ReactElement => {
 
 	const handleMessage = (message: any) => {
 		console.log('handleMessage: ', message);
-		if (message.page) {
-			setScreen(message.page);
+		if (message.eventName === 'gamestate') {
+			setGameState(message);
+			if (message.page) {
+				// if (message.page === 'question') {
+				// 	setQuestion(message.question[0]);
+				// }
+				setScreen(message.page);
+			}
 		}
 		// if (message.event === 'state') {
 		// 	dispatch(updateStates(message.body));
@@ -54,12 +62,12 @@ export const Game = (): ReactElement => {
 
 	switch (screen) {
 		case GameScreen.WAIT:
-			return <GameWaitScreen />;
+			return <GameWaitScreen gameState={gameState} />;
 		// case GameScreen.INTERMISSION:
 		// 	return <GameIntermissionScreen />;
 		case GameScreen.QUESTION:
-			return <GameQuestionScreen />;
+			return <GameQuestionScreen gameState={gameState} />;
 		case GameScreen.RESULTS:
-			return <GameResultsScreen />;
+			return <GameResultsScreen gameState={gameState} />;
 	}
 };

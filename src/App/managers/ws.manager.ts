@@ -66,7 +66,7 @@ export default class WSManager extends EventEmitter {
 			console.log('eventName: ', eventName, '\nbody: ', body);
 
 			if (eventName === 'gamestate') {
-				WSManager.emit('message', body?.state);
+				WSManager.emit('message', { eventName, ...(body?.state ?? {}) });
 				// if (body) {
 				// 	// const body = JSON.parse(e.data);
 				// 	if (body.context) {

@@ -2,9 +2,8 @@ import { ReactElement } from 'react';
 import { RootState, useAppSelector } from '../../redux/store';
 import QRequest from '../../services/QRequest';
 
-export const GameWaitScreen = (): ReactElement => {
-	const room = useAppSelector((state: RootState) => state.game.room);
-	const host = useAppSelector((state: RootState) => state.game.host);
+export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement => {
+	const { room, host, username } = useAppSelector((state: RootState) => state.game);
 
 	const startGame = async () => {
 		if (host) {
@@ -15,7 +14,7 @@ export const GameWaitScreen = (): ReactElement => {
 
 	return (
 		<div>
-			{host ? 'Start game when ready' : 'Waiting for game'}
+			{host ? 'Start game when ready' : `Waiting for game ${username}`}
 			<div>
 				<h4>Room: {room}</h4>
 
