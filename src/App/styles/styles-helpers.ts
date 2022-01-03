@@ -132,3 +132,33 @@ export const ellipse: any = css`
 	display: flex;
 	align-items: center;
 `;
+export const container: any = css`
+	max-width: 900px;
+	margin: 0 auto;
+`;
+export const before: any = css`
+	&::before {
+		content: '';
+		display: block;
+	}
+`;
+export const bfter: any = css`
+	&::after {
+		content: '';
+		display: block;
+	}
+`;
+export const btn_default: any = css`
+	cursor: pointer;
+	border: none;
+	box-shadow: none;
+	background-color: transparent;
+	user-select: none;
+`;
+export const input_default: any = css`
+	border: 2px solid ${GlobalColors.darkBlue90};
+	padding: 16px;
+	font-size: 1rem;
+	border-radius: 50px;
+	outline-color: ${GlobalColors.lightBlue};
+`;
