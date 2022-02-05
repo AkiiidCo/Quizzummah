@@ -3,7 +3,7 @@ import { column, column_center_both, container, row, row_center_both } from '../
 import Icons from '../../Images';
 export const GameContainer = styled.div`
 	${container}
-	max-height: 100vh;
+	height: 100vh;
 	padding: 1rem;
 `;
 export const GameHeaderContainer = styled.div`
@@ -23,6 +23,9 @@ export const GameDescription = styled.div`
 	font-size: 2rem;
 	font-weight: bold;
 `;
+export const GameTopBottpmSpacer = styled.div`
+	margin: 0.5rem 0;
+`;
 export const GameAvatarContainer = styled.div`
 	${row}
 	gap: 1rem;
@@ -33,11 +36,19 @@ export const GameAvatarItem = styled.div`
 	gap: .2rem;
 `;
 export const GameQuestion = styled.div`
-	font-size: 2rem;
+	font-size: ${({ host }) => (host ? `3rem` : `2rem`)};
 `;
 export const GameAnswersWrapper = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 1rem;
-	margin-top: 1rem;
+`;
+export const GameQuestionWrapper = styled.div`
+	${column}
+	height: 100%;
+	justify-content: space-between;
+`;
+export const GamesAnswersNextBtnWrapper = styled.div`
+	max-width: 250px;
+	justify-self: flex-end;
 `;

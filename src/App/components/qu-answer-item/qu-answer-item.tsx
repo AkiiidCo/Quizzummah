@@ -3,24 +3,40 @@ import { QUAnswerBadge, QUAnswerItemContainer, QUAnswerLetter, QUAnswerText } fr
 import Icons from '../../Images';
 
 export interface QUAnswerItemProps {
-	id?;
-	letter?;
+	AnswerIndex?;
 	showCorrect?;
 	correct?;
-	onChange?;
+	content?;
+	onClick?;
 	checked?;
 }
-export const QUAnswerItem: React.FC<QUAnswerItemProps> = ({ id, letter = 'A', showCorrect, correct, onChange, checked }) => {
+export const QUAnswerItem: React.FC<QUAnswerItemProps> = ({ AnswerIndex = 0, showCorrect, correct, content, onClick, checked }) => {
+	let letter = 'A';
+	switch (AnswerIndex) {
+		case 0:
+			letter = 'A';
+			break;
+		case 1:
+			letter = 'B';
+			break;
+		case 2:
+			letter = 'C';
+			break;
+		case 3:
+			letter = 'D';
+			break;
+		default:
+			letter = 'A';
+			break;
+	}
+
 	return (
-		<QUAnswerItemContainer htmlFor={id} checked={checked} showCorrect={showCorrect} correct={correct}>
+		<QUAnswerItemContainer onClick={onClick} checked={checked} showCorrect={showCorrect} correct={correct}>
 			<QUAnswerLetter showCorrect={showCorrect} correct={correct} checked={checked}>
 				{letter}
 			</QUAnswerLetter>
-			<QUAnswerText>
-				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste porro reprehenderit explicabo deserunt rem laboriosam repudiandae optio. Esse, possimus. Assumenda.
-			</QUAnswerText>
+			<QUAnswerText>{content}</QUAnswerText>
 			{showCorrect && <QUAnswerBadge>{correct ? <Icons.Rightanswer /> : <Icons.Wronganswer />}</QUAnswerBadge>}
-			<input type="radio" name="answer" id={id} onChange={onChange} />
 		</QUAnswerItemContainer>
 	);
 };

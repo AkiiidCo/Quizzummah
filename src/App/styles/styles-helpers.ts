@@ -134,6 +134,7 @@ export const ellipse: any = css`
 `;
 export const container: any = css`
 	max-width: 900px;
+	width: 100%;
 	margin: 0 auto;
 `;
 export const before: any = css`

@@ -1,12 +1,14 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { QUAnswerItem } from '../../components/qu-answer-item/qu-answer-item';
+import { QUButton } from '../../components/qu-button/qu-button';
 import { RootState, useAppSelector } from '../../redux/store';
 import QRequest from '../../services/QRequest';
-import { GameAnswersWrapper, GameContainer, GameDescriptionLabel, GameQuestion } from './game.styles';
+import { GameAnswersWrapper, GameContainer, GameDescriptionLabel, GameQuestion, GameQuestionWrapper, GamesAnswersNextBtnWrapper } from './game.styles';
 
 export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElement => {
 	const { room, host, username } = useAppSelector((state: RootState) => state.game);
 	const [answered, setAnswered] = useState(false);
+	const [answeredIndex, setAnsweredIndex] = useState(null);
 
 	useEffect(() => {
 		setAnswered(false);
@@ -19,51 +21,50 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 		}
 	};
 
-	const selectedAnswer = async (answerId) => {
+	const selectedAnswer = async (answerId, index) => {
 		if (!host) {
 			setAnswered(true);
+			setAnsweredIndex(index);
 			const { data } = await QRequest.post('/gamerun/submit', { answer: answerId });
 			console.log('data: ', data);
 		}
 	};
 
-	const answers = ['a', 'b', 'c', 'd'];
-
 	return (
 		<GameContainer>
-			{/* <GameDescriptionLabel>Question Number 1</GameDescriptionLabel> */}
-			<h5>Game Question Screen</h5>
-			<div>Question Number {gameState.questionNumber + 1}</div>
-			{/* <GameQuestion>question desc here</GameQuestion> */}
-			<div>{gameState.question[0]?.question}</div>
-			{/* <GameAnswersWrapper>
-				{answers.map((item) => (
-					<QUAnswerItem id={item} letter={item} />
-				))}
-			</GameAnswersWrapper> */}
-			{answered ? (
-				<div>Already answered</div>
-			) : (
+			<GameQuestionWrapper>
 				<div>
-					Answers
-					<div>
-						{gameState.question[0]?.answers.map((answer) => (
-							<div key={answer.id} onClick={() => selectedAnswer(answer.id)}>
-								{answer.answer}
-							</div>
-						))}
-					</div>
+					<GameDescriptionLabel>
+						{host ? 'host' : username} - {room}
+					</GameDescriptionLabel>
+					<GameDescriptionLabel>Question Number {gameState.questionNumber + 1}</GameDescriptionLabel>
+					<GameQuestion host={host}>{gameState.question[0]?.question}</GameQuestion>
+					{answered ? (
+						<>
+							<GameDescriptionLabel>You answered</GameDescriptionLabel>
+							<QUAnswerItem AnswerIndex={answeredIndex} content={gameState.question[0]?.answers[answeredIndex].answer} checked={true} />
+						</>
+					) : (
+						<>
+							<GameDescriptionLabel>Answers</GameDescriptionLabel>
+							<GameAnswersWrapper>
+								{gameState.question[0]?.answers.map((answer, index) => {
+									return (
+										<QUAnswerItem
+											AnswerIndex={index}
+											content={answer.answer}
+											onClick={() => selectedAnswer(answer.id, index)}
+											checked={selectedAnswer === answer.id}
+											key={answer.id}
+										/>
+									);
+								})}
+							</GameAnswersWrapper>
+						</>
+					)}
 				</div>
-			)}
-
-			{host && (
-				<div>
-					<button onClick={next}>Next question</button>
-				</div>
-			)}
-			<div>
-				{host ? 'host' : username} {room}
-			</div>
+				<GamesAnswersNextBtnWrapper>{host && <QUButton onClick={next} title="Next question" />}</GamesAnswersNextBtnWrapper>
+			</GameQuestionWrapper>
 		</GameContainer>
 	);
 };

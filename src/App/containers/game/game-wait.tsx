@@ -2,7 +2,17 @@ import { ReactElement } from 'react';
 import { QUAvatar } from '../../components/qu-avatar/qu-avatar';
 import { RootState, useAppSelector } from '../../redux/store';
 import QRequest from '../../services/QRequest';
-import { GameAvatarContainer, GameAvatarItem, GameContainer, GameDescription, GameDescriptionContainer, GameDescriptionLabel, GameHeaderContainer, MasjidIllustartion } from './game.styles';
+import {
+	GameAvatarContainer,
+	GameAvatarItem,
+	GameContainer,
+	GameDescription,
+	GameDescriptionContainer,
+	GameDescriptionLabel,
+	GameHeaderContainer,
+	GameTopBottpmSpacer,
+	MasjidIllustartion,
+} from './game.styles';
 import { QUButton } from '../../components/qu-button/qu-button';
 
 export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement => {
@@ -15,6 +25,7 @@ export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement 
 		}
 	};
 
+	// for testing
 	const users = ['user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1'];
 
 	return (
@@ -26,8 +37,14 @@ export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement 
 					<GameDescription>quizzummah.com</GameDescription>
 					<GameDescriptionLabel>Enter join code</GameDescriptionLabel>
 					<GameDescription>{room}</GameDescription>
-					<GameDescriptionLabel>{host ? 'Start game when ready' : `Waiting for game ${username}...`}</GameDescriptionLabel>
-					{host && <QUButton onClick={startGame} title="Start Game" />}
+					{host ? <GameDescriptionLabel>Start game when ready</GameDescriptionLabel> : <GameDescriptionLabel>joined as</GameDescriptionLabel>}
+					{!host && <GameDescription>{username}</GameDescription>}
+
+					{host && (
+						<GameTopBottpmSpacer>
+							<QUButton onClick={startGame} title="Start Game" />
+						</GameTopBottpmSpacer>
+					)}
 				</GameDescriptionContainer>
 			</GameHeaderContainer>
 			<GameAvatarContainer>
