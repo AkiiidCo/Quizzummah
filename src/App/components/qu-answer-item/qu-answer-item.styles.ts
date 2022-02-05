@@ -26,10 +26,18 @@ color:${GlobalColors.darkBlue};
 		display: none;
 	}
 	position: relative;
+	border: 1px solid transparent;
+	transition: 0.3s;
+	cursor: pointer;
+	&:hover {
+		border: 1px solid ${GlobalColors.darkBlue};
+	}
 `;
 export const QUAnswerLetter = styled.div`
 	min-width: 40px;
+	max-width: 40px;
 	min-height: 40px;
+	max-height: 40px;
 	flex: 1 1 80px;
 	border-radius: ${Rules.perfectCircle};
 
@@ -58,6 +66,7 @@ export const QUAnswerLetter = styled.div`
 `}
 	${row_center_both}
 	font-size: 1.5rem;
+	text-transform: uppercase;
 	font-weight: 900;
 `;
 export const QUAnswerText = styled.div``;

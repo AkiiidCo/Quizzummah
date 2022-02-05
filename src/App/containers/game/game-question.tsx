@@ -1,6 +1,8 @@
 import { ReactElement, useEffect, useState } from 'react';
+import { QUAnswerItem } from '../../components/qu-answer-item/qu-answer-item';
 import { RootState, useAppSelector } from '../../redux/store';
 import QRequest from '../../services/QRequest';
+import { GameAnswersWrapper, GameContainer, GameDescriptionLabel, GameQuestion } from './game.styles';
 
 export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElement => {
 	const { room, host, username } = useAppSelector((state: RootState) => state.game);
@@ -25,11 +27,20 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 		}
 	};
 
+	const answers = ['a', 'b', 'c', 'd'];
+
 	return (
-		<div>
+		<GameContainer>
+			{/* <GameDescriptionLabel>Question Number 1</GameDescriptionLabel> */}
 			<h5>Game Question Screen</h5>
 			<div>Question Number {gameState.questionNumber + 1}</div>
+			{/* <GameQuestion>question desc here</GameQuestion> */}
 			<div>{gameState.question[0]?.question}</div>
+			{/* <GameAnswersWrapper>
+				{answers.map((item) => (
+					<QUAnswerItem id={item} letter={item} />
+				))}
+			</GameAnswersWrapper> */}
 			{answered ? (
 				<div>Already answered</div>
 			) : (
@@ -53,6 +64,6 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 			<div>
 				{host ? 'host' : username} {room}
 			</div>
-		</div>
+		</GameContainer>
 	);
 };

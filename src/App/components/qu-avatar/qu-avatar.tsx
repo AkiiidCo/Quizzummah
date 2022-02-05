@@ -11,7 +11,7 @@ export interface QUAvatarProps {
 	showBadges?;
 }
 
-export const QUAvatar: React.FC<QUAvatarProps> = ({ img, color, Place, showBadges, size }) => {
+export const QUAvatar: React.FC<QUAvatarProps> = ({ img = <Icons.Camel />, color, Place, showBadges, size }) => {
 	return (
 		<QUAvatarContainer color={color} size={size}>
 			{img}
