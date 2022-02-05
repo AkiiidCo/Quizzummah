@@ -25,7 +25,7 @@ export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement 
 					<GameDescriptionLabel>Go to</GameDescriptionLabel>
 					<GameDescription>quizzummah.com</GameDescription>
 					<GameDescriptionLabel>Enter join code</GameDescriptionLabel>
-					<GameDescription>{room}343</GameDescription>
+					<GameDescription>{room}</GameDescription>
 					<GameDescriptionLabel>{host ? 'Start game when ready' : `Waiting for game ${username}...`}</GameDescriptionLabel>
 					{host && <QUButton onClick={startGame} title="Start Game" />}
 				</GameDescriptionContainer>
