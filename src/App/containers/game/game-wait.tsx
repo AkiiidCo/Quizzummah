@@ -26,7 +26,7 @@ export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement 
 	};
 
 	// for testing
-	const users = ['user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1'];
+	const users = ['user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1'];
 
 	return (
 		<GameContainer>
