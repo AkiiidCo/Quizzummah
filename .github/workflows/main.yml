@@ -20,17 +20,6 @@ jobs:
               run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
               id: extract_branch
 
-            # - name: Initialize Environment Variables
-            #   id: branch_check
-            #   run: |
-            #     echo "Running on branch ${{ github.ref }}"
-            #     if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            #       echo "::set-output name=domain::quizzummah.com"
-            #       echo "::set-output name=distributionid::E1LUJ746BXUS8R"
-            #     else
-            #        echo "::set-output name=env_name::Features"
-            #     fi
-
             # Configure AWS Credential
             - name: Configure AWS Credentials
               uses: aws-actions/configure-aws-credentials@v1
@@ -41,20 +30,10 @@ jobs:
 
             # Build the App
             - name: Install NPM Packages
-              run: CI=false npm install
+              run: npm install
 
             - name: Build the App
               run: CI=false npm run build
-
-            # # Deploy to AWS CloudFormation
-            # - name: Deploy to AWS CloudFormation
-            #   uses: aws-actions/aws-cloudformation-github-deploy@v1
-            #   with:
-            #     name: quzziummah-${{ steps.extract_branch.outputs.branch }}
-            #     template: cloudfront.yml
-            #     no-fail-on-empty-changeset: "1"
-            #     parameter-overrides: >-
-            #       DomainName=${{ steps.branch_check.outputs.domain }}
 
             - name: Deploy to AWS S3
               uses: jakejarvis/s3-sync-action@v0.5.1
@@ -72,7 +51,7 @@ jobs:
             - name: Invalidate Cloudfront Cache
               uses: chetan/invalidate-cloudfront-action@master
               env:
-                  DISTRIBUTION: ${{ steps.branch_check.outputs.distributionid }}
+                  DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
                   PATHS: '/*'
                   AWS_REGION: 'us-east-1'
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
