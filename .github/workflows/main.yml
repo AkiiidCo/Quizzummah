@@ -41,10 +41,10 @@ jobs:
 
             # Build the App
             - name: Install NPM Packages
-              run: npm install
+              run: CI=false npm install
 
             - name: Build the App
-              run: npm run build
+              run: CI=false npm run build
 
             # # Deploy to AWS CloudFormation
             # - name: Deploy to AWS CloudFormation
