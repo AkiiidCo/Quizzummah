@@ -5,54 +5,28 @@ on:
         branches:
             - main
 jobs:
-    # This workflow contains a single job called "deploy"
-    deploy:
-        # The type of runner that the job will run on
+    run:
         runs-on: ubuntu-latest
-        # Steps represent a sequence of tasks that will be executed as part of the job
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         steps:
-            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-            - name: Checkout code
-              uses: actions/checkout@v2
+            - uses: actions/checkout@v2
 
-            - name: Extract branch name
-              shell: bash
-              run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-              id: extract_branch
-
-            # Configure AWS Credential
-            - name: Configure AWS Credentials
-              uses: aws-actions/configure-aws-credentials@v1
-              with:
-                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                  aws-region: us-east-1
-
-            # Build the App
-            - name: Install NPM Packages
+            - name: Install dependencies
               run: npm install
 
-            - name: Build the App
+            - name: Build
               run: CI=false npm run build
 
-            - name: Deploy to AWS S3
-              uses: jakejarvis/s3-sync-action@v0.5.1
+            - name: Deploy
+              uses: reggionick/s3-deploy@v3
               with:
-                  # --acl public read => makes files publicly readable(i.e. makes sure that your bucket settings are also set to public)
-                  # --delete => permanently deletes files in S3 bucket that are not present in latest build
-                  args: --acl public-read --delete
-              env:
-                  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }} # S3 bucket name
-                  # note: use IAM role with limited role for below access-key-id and secret-access-key
-                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Access Key ID
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Access Secret Key
-                  SOURCE_DIR: 'build' # build folder
-
-            - name: Invalidate Cloudfront Cache
-              uses: chetan/invalidate-cloudfront-action@master
-              env:
-                  DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-                  PATHS: '/*'
-                  AWS_REGION: 'us-east-1'
-                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  folder: build
+                  bucket: ${{ secrets.AWS_S3_BUCKET }}
+                  bucket-region: us-east-1
+                  dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+                  invalidation: /*
+                  delete-removed: true
+                  no-cache: true
+                  private: true
