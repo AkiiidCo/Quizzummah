@@ -35,8 +35,8 @@ jobs:
             - name: Configure AWS Credentials
               uses: aws-actions/configure-aws-credentials@v1
               with:
-                  aws-access-key-id: ${{ secrets.AWS_ACTIONS_ACCESS }}
-                  aws-secret-access-key: ${{ secrets.AWS_ACTIONS_SECRET }}
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   aws-region: us-east-1
 
             # Build the App
@@ -65,8 +65,8 @@ jobs:
               env:
                   AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }} # S3 bucket name
                   # note: use IAM role with limited role for below access-key-id and secret-access-key
-                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACTIONS_ACCESS }} # Access Key ID
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACTIONS_SECRET }} # Access Secret Key
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Access Key ID
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Access Secret Key
                   SOURCE_DIR: 'build' # build folder
 
             - name: Invalidate Cloudfront Cache
@@ -75,5 +75,5 @@ jobs:
                   DISTRIBUTION: ${{ steps.branch_check.outputs.distributionid }}
                   PATHS: '/*'
                   AWS_REGION: 'us-east-1'
-                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACTIONS_ACCESS }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACTIONS_SECRET }}
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
