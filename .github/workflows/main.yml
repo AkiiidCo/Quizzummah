@@ -1,80 +1,79 @@
 name: 'Deploy Quizzummah'
 
-on: 
-  push:
-    branches:
-      - main
+on:
+    push:
+        branches:
+            - main
 jobs:
-  # This workflow contains a single job called "deploy"
-  deploy:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-      
-      # - name: Initialize Environment Variables
-      #   id: branch_check
-      #   run: |
-      #     echo "Running on branch ${{ github.ref }}"
-      #     if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-      #       echo "::set-output name=domain::quizzummah.com"
-      #       echo "::set-output name=distributionid::E1LUJ746BXUS8R"
-      #     else
-      #        echo "::set-output name=env_name::Features"
-      #     fi   
+    # This workflow contains a single job called "deploy"
+    deploy:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      # Configure AWS Credential
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACTIONS_ACCESS }}
-          aws-secret-access-key: ${{ secrets.AWS_ACTIONS_SECRET }}
-          aws-region: us-east-1
-          
-      # Build the App
-      - name: Install NPM Packages
-        run: npm install
-       
-      - name: Build the App        
-        run: npm run build  
+            - name: Extract branch name
+              shell: bash
+              run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+              id: extract_branch
 
-      # # Deploy to AWS CloudFormation
-      # - name: Deploy to AWS CloudFormation
-      #   uses: aws-actions/aws-cloudformation-github-deploy@v1
-      #   with:
-      #     name: quzziummah-${{ steps.extract_branch.outputs.branch }}
-      #     template: cloudfront.yml
-      #     no-fail-on-empty-changeset: "1"
-      #     parameter-overrides: >-
-      #       DomainName=${{ steps.branch_check.outputs.domain }}
-        
-      - name: Deploy to AWS S3
-        uses: jakejarvis/s3-sync-action@v0.5.1
-        with:
-          # --acl public read => makes files publicly readable(i.e. makes sure that your bucket settings are also set to public)
-          # --delete => permanently deletes files in S3 bucket that are not present in latest build
-          args: --acl public-read --delete
-        env:
-          AWS_S3_BUCKET: ${{ steps.branch_check.outputs.domain }} # S3 bucket name
-          # note: use IAM role with limited role for below access-key-id and secret-access-key
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACTIONS_ACCESS }} # Access Key ID
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACTIONS_SECRET }} # Access Secret Key
-          SOURCE_DIR: "build" # build folder
+            # - name: Initialize Environment Variables
+            #   id: branch_check
+            #   run: |
+            #     echo "Running on branch ${{ github.ref }}"
+            #     if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            #       echo "::set-output name=domain::quizzummah.com"
+            #       echo "::set-output name=distributionid::E1LUJ746BXUS8R"
+            #     else
+            #        echo "::set-output name=env_name::Features"
+            #     fi
 
-      - name: Invalidate Cloudfront Cache
-        uses: chetan/invalidate-cloudfront-action@master
-        env:
-          DISTRIBUTION: ${{ steps.branch_check.outputs.distributionid }}
-          PATHS: '/*'
-          AWS_REGION: 'us-east-1'
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACTIONS_ACCESS }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACTIONS_SECRET }}            
-          
+            # Configure AWS Credential
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACTIONS_ACCESS }}
+                  aws-secret-access-key: ${{ secrets.AWS_ACTIONS_SECRET }}
+                  aws-region: us-east-1
+
+            # Build the App
+            - name: Install NPM Packages
+              run: npm install
+
+            - name: Build the App
+              run: npm run build
+
+            # # Deploy to AWS CloudFormation
+            # - name: Deploy to AWS CloudFormation
+            #   uses: aws-actions/aws-cloudformation-github-deploy@v1
+            #   with:
+            #     name: quzziummah-${{ steps.extract_branch.outputs.branch }}
+            #     template: cloudfront.yml
+            #     no-fail-on-empty-changeset: "1"
+            #     parameter-overrides: >-
+            #       DomainName=${{ steps.branch_check.outputs.domain }}
+
+            - name: Deploy to AWS S3
+              uses: jakejarvis/s3-sync-action@v0.5.1
+              with:
+                  # --acl public read => makes files publicly readable(i.e. makes sure that your bucket settings are also set to public)
+                  # --delete => permanently deletes files in S3 bucket that are not present in latest build
+                  args: --acl public-read --delete
+              env:
+                  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }} # S3 bucket name
+                  # note: use IAM role with limited role for below access-key-id and secret-access-key
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACTIONS_ACCESS }} # Access Key ID
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACTIONS_SECRET }} # Access Secret Key
+                  SOURCE_DIR: 'build' # build folder
+
+            - name: Invalidate Cloudfront Cache
+              uses: chetan/invalidate-cloudfront-action@master
+              env:
+                  DISTRIBUTION: ${{ steps.branch_check.outputs.distributionid }}
+                  PATHS: '/*'
+                  AWS_REGION: 'us-east-1'
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACTIONS_ACCESS }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACTIONS_SECRET }}
