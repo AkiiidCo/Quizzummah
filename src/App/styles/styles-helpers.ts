@@ -1,7 +1,7 @@
 import { css } from 'styled-components/macro';
 import { GlobalColors } from './global-styles';
-import { Theme } from '@material-ui/core/styles/createTheme';
-import createStyles from '@material-ui/core/styles/createStyles';
+import { Theme } from '@mui/core/styles/createTheme';
+import createStyles from '@mui/core/styles/createStyles';
 
 export const popoverStyles = {
 	main: (theme: Theme) =>

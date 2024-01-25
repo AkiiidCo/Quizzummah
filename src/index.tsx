@@ -9,10 +9,10 @@ import { BrowserRouter } from 'react-router-dom';
 import ErrorBoundary from './App/error-boundary/error-boundary';
 import { store } from './App/redux/store';
 import theme from './App/styles/theme';
-import { StylesProvider } from '@material-ui/styles';
+import { StylesProvider } from '@mui/styles';
 import { ThemeProvider } from 'styled-components/macro';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider } from '@mui/core/styles';
+import CssBaseline from '@mui/core/CssBaseline';
 
 ReactDOM.render(
 	<React.StrictMode>

@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from '@material-ui/core/styles';
+import { createTheme, ThemeOptions } from '@mui/core/styles';
 import { GlobalColors } from './global-styles';
 
 // ###########
