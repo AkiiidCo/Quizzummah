@@ -17,7 +17,7 @@ export const QUPlayerName = styled.div`
 	flex: 1;
 	font-weight: 900;
 `;
-export const QUAnswerLetter = styled.div`
+export const QUAnswerLetter = styled.div<{ correct?: boolean }>`
 	min-width: 40px;
 	min-height: 40px;
 	border-radius: ${Rules.perfectCircle};

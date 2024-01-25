@@ -24,7 +24,6 @@
 		"sourceMap": false,
 		"strictNullChecks": false,
 		"stripInternal": true,
-		"suppressImplicitAnyIndexErrors": true,
 		"useUnknownInCatchVariables": false
 	},
 	"include": ["src"]

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { GlobalColors, Rules, Styles } from '../../styles/global-styles';
-import { row, row_center_both, row_center_vertical } from '../../styles/styles-helpers';
-export const QUAnswerItemContainer = styled.label`
+import { row_center_both, row_center_vertical } from '../../styles/styles-helpers';
+
+export const QUAnswerItemContainer = styled.label<{ checked?: boolean; correct?: boolean; showCorrect?: boolean }>`
 	${({ checked }) => (checked ? `background-color: ${GlobalColors.lightBlue};color:${GlobalColors.white};` : `background-color: ${GlobalColors.white};color:${GlobalColors.darkBlue};`)};
 	${({ correct, showCorrect }) =>
 		showCorrect && correct
@@ -33,7 +34,7 @@ color:${GlobalColors.darkBlue};
 		border: 1px solid ${GlobalColors.darkBlue};
 	}
 `;
-export const QUAnswerLetter = styled.div`
+export const QUAnswerLetter = styled.div<{ checked?: boolean; correct?: boolean; showCorrect?: boolean }>`
 	min-width: 40px;
 	max-width: 40px;
 	min-height: 40px;

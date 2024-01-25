@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { GlobalColors, Rules } from '../styles/global-styles';
 // import Illustrations from 'src/App/Images/new-illustrations';
 import { column_center_both } from '../styles/styles-helpers';

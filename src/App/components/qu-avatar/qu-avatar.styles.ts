@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { GlobalColors, Rules, Styles } from '../../styles/global-styles';
-import { row, row_center_between, row_center_both, row_center_vertical } from '../../styles/styles-helpers';
+import { GlobalColors, Rules } from '../../styles/global-styles';
+import { row_center_between, row_center_both } from '../../styles/styles-helpers';
 import { SIZE } from '../../utils/Enums';
-export const QUAvatarContainer = styled.div`
+
+export const QUAvatarContainer = styled.div<{ size?: SIZE; }>`
 	${row_center_both}
 	background-color: ${({ color }) => (color ? color : GlobalColors.darkBlue)};
 	border-radius: ${Rules.perfectCircle};
@@ -22,10 +23,10 @@ export const QUAvatarContainer = styled.div`
 	`}
 	position: relative;
 `;
-export const QUAvatarBadges = styled.div`
+export const QUAvatarBadges = styled.div<{ size?: SIZE; }>`
 	${row_center_between}
 `;
-export const QUAvatarBadgePlace = styled.div`
+export const QUAvatarBadgePlace = styled.div<{ size?: SIZE; }>`
 	position: absolute;
 	left: 0;
 	bottom: -12px;
@@ -57,7 +58,7 @@ export const QUAvatarBadgePlace = styled.div`
 	`}
 	}
 `;
-export const QUAvatarBadgenumber = styled.div`
+export const QUAvatarBadgenumber = styled.div<{ size?: SIZE; }>`
 	${row_center_both}
 	background-color: ${GlobalColors.white};
 	border-radius: ${Rules.perfectCircle};

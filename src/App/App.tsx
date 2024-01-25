@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ScrollToTop from './components/scroll-to-top';
 import './App.css';
 import { RootState, useAppSelector } from './redux/store';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { GlobalColors, Rules } from './styles/global-styles';
 import { Router } from './router';
 import { ToastContainer } from 'react-toastify';
@@ -28,7 +28,7 @@ function App() {
 
 export default App;
 
-export const Body: any = styled.div`
+export const Body: any = styled.div<{ rtl: boolean }>`
 	/* background: ${GlobalColors.newPurple}; */
 	width: 100%;
 	font-size: 16px;
