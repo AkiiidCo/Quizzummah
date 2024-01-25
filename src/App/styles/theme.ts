@@ -1,13 +1,13 @@
-import { createTheme, ThemeOptions } from '@mui/core/styles';
+import { DeprecatedThemeOptions, adaptV4Theme, createTheme } from '@mui/material/styles';
 import { GlobalColors } from './global-styles';
 
 // ###########
 // DARK
 // ###########
 
-export const darkOverridings: ThemeOptions = {
+export const darkOverridings: DeprecatedThemeOptions = {
 	palette: {
-		type: 'dark',
+		mode: 'dark',
 		primary: {
 			light: GlobalColors.primary,
 			main: GlobalColors.primary,
@@ -24,18 +24,18 @@ export const darkOverridings: ThemeOptions = {
 			primary: GlobalColors.white1,
 			secondary: GlobalColors.white3,
 			disabled: GlobalColors.white3,
-			hint: GlobalColors.white2,
+			// hint: GlobalColors.white2,
 		},
 	},
 };
 
-const DarkTheme = createTheme(darkOverridings);
+const DarkTheme = createTheme(adaptV4Theme(darkOverridings));
 
 // #########
 // Light
 // #########
 
-export const lightOverridings: ThemeOptions = {
+export const lightOverridings: DeprecatedThemeOptions = {
 	palette: {
 		primary: {
 			main: GlobalColors.primary,
@@ -49,11 +49,11 @@ export const lightOverridings: ThemeOptions = {
 			primary: GlobalColors.white1,
 			secondary: GlobalColors.white1,
 			disabled: GlobalColors.white1,
-			hint: GlobalColors.white1,
+			// hint: GlobalColors.white1,
 		},
 	},
 };
 
-const LightTheme = createTheme(lightOverridings);
+const LightTheme = createTheme(adaptV4Theme(lightOverridings));
 
 export default { light: LightTheme, dark: DarkTheme };

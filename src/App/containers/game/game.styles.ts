@@ -35,7 +35,7 @@ export const GameAvatarItem = styled.div`
 	${column_center_both}
 	gap: .2rem;
 `;
-export const GameQuestion = styled.div`
+export const GameQuestion = styled.div<{ host?: boolean }>`
 	font-size: ${({ host }) => (host ? `3rem` : `2rem`)};
 `;
 export const GameAnswersWrapper = styled.div`

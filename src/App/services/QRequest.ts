@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 if (process.env.NODE_ENV !== 'production') {
 	sessionStorage.setItem('token', process.env.REACT_APP_TOKEN);
@@ -12,7 +12,7 @@ const QRequest = axios.create({
 	},
 });
 
-QRequest.interceptors.request.use((config): AxiosRequestConfig => {
+QRequest.interceptors.request.use((config) => {
 	const token = sessionStorage.getItem('token');
 	if (token) {
 		config.headers['Authorization'] = `Bearer ${token}`;

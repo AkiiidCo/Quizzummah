@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { GlobalColors } from '../../styles/global-styles';
 import { btn_default, row_center_both } from '../../styles/styles-helpers';
-export const QUButtonContainer = styled.a`
+
+export const QUButtonContainer = styled.a<{ small?: boolean; outlined?: boolean }>`
 	${btn_default}
 	${row_center_both}
 	${({ small }) => small && `max-width: 250px;`}
