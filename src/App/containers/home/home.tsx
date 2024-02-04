@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router';
 import { updateGame } from '../../redux/slices/game.slice';
 import { useAppDispatch } from '../../redux/store';
 import QRequest from '../../services/QRequest';
-import Icons from '../../Images';
+import { BismiAllah, Creategame, LogoQuizzUmmah, Masjid, Play } from '../../Images';
 import { QUButton } from '../../components/qu-button/qu-button';
-import { HomeContainer, HomeHeader, HomeHero, HomeRightSection, HomeLeftSection, HomeInputs, HomeFooter, HomeSmallTitle, HomeLink, HomeQuizzummahLogo, HomeFooterText } from './home.styles';
+import { HomeContainer, HomeHeader, HomeHero, HomeRightSection, HomeLeftSection, HomeInputs, HomeFooter, HomeLink, HomeQuizzummahLogo } from './home.styles';
 
 export const Home = (): ReactElement => {
 	const dispatch = useAppDispatch();
@@ -48,40 +48,40 @@ export const Home = (): ReactElement => {
 	return (
 		<HomeContainer>
 			<HomeHeader>
-				<Icons.BismiAllah />
+				<img src={BismiAllah} />
 				<div />
 				{/* <HeaderSettingsBtn>
-					<Icons.Settings />
+					<img src={Settings} />
 					Settings
 				</HeaderSettingsBtn> */}
 			</HomeHeader>
 			<HomeHero>
 				<HomeLeftSection>
-					<Icons.Masjid />
+					<img src={Masjid} />
 				</HomeLeftSection>
 				<HomeRightSection>
-					<HomeQuizzummahLogo />
+					<HomeQuizzummahLogo src={LogoQuizzUmmah} />
 
-					<HomeSmallTitle>Enter name</HomeSmallTitle>
+					<div className="items-center text-darkBlue">Enter name</div>
 					<HomeInputs>
 						<input autoFocus disabled={loading} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Name" />
 					</HomeInputs>
 					<HomeInputs>
 						<input disabled={loading} value={room} onChange={(e) => setRoom(e.target.value)} maxLength={4} placeholder="Room Code" />
 					</HomeInputs>
-					<QUButton disabled={loading || !username || !room} title="Join game" onClick={openJoinGame} small LeftIcon={<Icons.Play />} />
-					<HomeSmallTitle>or create a game</HomeSmallTitle>
-					<QUButton disabled={loading || !username} title="Create game" onClick={createGame} small outlined LeftIcon={<Icons.Creategame />} />
+					<QUButton disabled={loading || !username || !room} title="Join game" onClick={openJoinGame} small LeftIcon={<img src={Play} />} />
+					<div className="items-center text-darkBlue">or create a game</div>
+					<QUButton disabled={loading || !username} title="Create game" onClick={createGame} small outlined LeftIcon={<img src={Creategame} />} />
 				</HomeRightSection>
 			</HomeHero>
 			<HomeFooter>
-				<HomeFooterText>
+				<div className="items-center text-darkBlue mt-4">
 					Contribute to QuizzUmmah by
 					<HomeLink href="https://forms.gle/Q293AdE1eBJez7U28" target="_blank">
 						{' '}
 						Submiting a question
 					</HomeLink>
-				</HomeFooterText>
+				</div>
 			</HomeFooter>
 		</HomeContainer>
 	);

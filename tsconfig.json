@@ -1,7 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "ESNext",
 		"lib": ["dom", "dom.iterable", "esnext"],
+		"types": ["vite/client", "vite-plugin-svgr/client"],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
@@ -24,7 +25,7 @@
 		"sourceMap": false,
 		"strictNullChecks": false,
 		"stripInternal": true,
-		"useUnknownInCatchVariables": false
+		"useUnknownInCatchVariables": false,
 	},
-	"include": ["src"]
+	"include": ["src"],
 }

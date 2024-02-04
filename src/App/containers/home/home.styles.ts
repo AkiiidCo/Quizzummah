@@ -1,7 +1,7 @@
 import { before, btn_default, column, column_center_horizontal, container, flex, row, row_center_between, row_center_both, row_center_vertical } from '../../styles/styles-helpers';
 import styled from 'styled-components';
 import { GlobalColors } from '../../styles/global-styles';
-import Icons from '../../Images';
+
 export const HomeContainer = styled.div`
 	${container}
 	${column}
@@ -29,7 +29,7 @@ export const HomeRightSection = styled.div`
 	${column_center_horizontal}
 	gap: 16px;
 `;
-export const HomeQuizzummahLogo = styled(Icons.LogoQuizzUmmah)`
+export const HomeQuizzummahLogo = styled.img`
 	margin-bottom: 3rem;
 	width: 100%;
 `;
@@ -59,13 +59,6 @@ export const HomeFooter = styled.div`
 	max-width: 400px;
 	width: 100%;
 	margin: 0 auto;
-`;
-export const HomeSmallTitle = styled.div`
-	text-align: center;
-	color: ${GlobalColors.darkBlue};
-`;
-export const HomeFooterText = styled(HomeSmallTitle)`
-	margin-top: 1rem;
 `;
 export const HomeLink = styled.a`
 	&:hover {

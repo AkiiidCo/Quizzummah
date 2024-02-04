@@ -8,27 +8,13 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import ErrorBoundary from './App/error-boundary/error-boundary';
 import { store } from './App/redux/store';
-import theme from './App/styles/theme';
-import { StylesProvider } from '@mui/styles';
-import { ThemeProvider } from 'styled-components';
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
-
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<ErrorBoundary>
 				<BrowserRouter>
-					<StylesProvider injectFirst>
-						<CssBaseline />
-						<StyledEngineProvider injectFirst>
-                            <ThemeProvider theme={theme.dark}>
-                                <ThemeProvider theme={theme.dark}>
-                                    <App />
-                                </ThemeProvider>
-                            </ThemeProvider>
-                        </StyledEngineProvider>
-					</StylesProvider>
+					<App />
 				</BrowserRouter>
 			</ErrorBoundary>
 		</Provider>

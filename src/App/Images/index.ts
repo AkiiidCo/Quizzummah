@@ -1,68 +1,32 @@
-// Icons
-import { ReactComponent as Amama } from './amama.svg';
-import { ReactComponent as Bronzemedal } from './bronzeMedal.svg';
-import { ReactComponent as Camel } from './camel.svg';
-import { ReactComponent as Cannon } from './cannon.svg';
-import { ReactComponent as Creategame } from './createGame.svg';
-import { ReactComponent as Doaa } from './doaa.svg';
-import { ReactComponent as Exit } from './exit.svg';
-import { ReactComponent as Fanos } from './fanos.svg';
-import { ReactComponent as Goldmedal } from './goldMedal.svg';
-import { ReactComponent as Languageicon } from './languageIcon.svg';
-import { ReactComponent as Masjid } from './masjid.svg';
-import { ReactComponent as Misbaha } from './misbaha.svg';
-import { ReactComponent as Play } from './play.svg';
-import { ReactComponent as PointsDecoration } from './points decoration.svg';
-import { ReactComponent as Pointsicon } from './pointsIcon.svg';
-import { ReactComponent as Pray } from './pray.svg';
-import { ReactComponent as Replay } from './replay.svg';
-import { ReactComponent as Rightanswer } from './rightAnswer.svg';
-import { ReactComponent as Sendmessage } from './sendMessage.svg';
-import { ReactComponent as Settings } from './settings.svg';
-import { ReactComponent as Silvermedal } from './silverMedal.svg';
-import { ReactComponent as Swipeleft } from './swipeLeft.svg';
-import { ReactComponent as Swiperight } from './swipeRight.svg';
-import { ReactComponent as Timer } from './timer.svg';
-import { ReactComponent as Trophy } from './trophy.svg';
-import { ReactComponent as Volumedown } from './volumeDown.svg';
-import { ReactComponent as Voulueup } from './voulueUp.svg';
-import { ReactComponent as Warning } from './warning.svg';
-import { ReactComponent as Wronganswer } from './wrongAnswer.svg';
-import { ReactComponent as BismiAllah } from './bismiAllah.svg';
-import { ReactComponent as Pattern } from './pattern.svg';
-import { ReactComponent as LogoQuizzUmmah } from './logoQuizzUmmah.svg';
-
-export default {
-	BismiAllah,
-	LogoQuizzUmmah,
-	Amama,
-	Bronzemedal,
-	Camel,
-	Cannon,
-	Creategame,
-	Doaa,
-	Exit,
-	Fanos,
-	Goldmedal,
-	Languageicon,
-	Masjid,
-	Misbaha,
-	Play,
-	PointsDecoration,
-	Pointsicon,
-	Pray,
-	Replay,
-	Rightanswer,
-	Sendmessage,
-	Settings,
-	Silvermedal,
-	Swipeleft,
-	Swiperight,
-	Timer,
-	Trophy,
-	Volumedown,
-	Voulueup,
-	Warning,
-	Wronganswer,
-	Pattern,
-};
+export { default as Amama } from './amama.svg';
+export { default as Bronzemedal } from './bronzeMedal.svg';
+export { default as Camel } from './camel.svg';
+export { default as Cannon } from './cannon.svg';
+export { default as Creategame } from './createGame.svg';
+export { default as Doaa } from './doaa.svg';
+export { default as Exit } from './exit.svg';
+export { default as Fanos } from './fanos.svg';
+export { default as Goldmedal } from './goldMedal.svg';
+export { default as Languageicon } from './languageIcon.svg';
+export { default as Masjid } from './masjid.svg';
+export { default as Misbaha } from './misbaha.svg';
+export { default as Play } from './play.svg';
+export { default as PointsDecoration } from './points decoration.svg';
+export { default as Pointsicon } from './pointsIcon.svg';
+export { default as Pray } from './pray.svg';
+export { default as Replay } from './replay.svg';
+export { default as Rightanswer } from './rightAnswer.svg';
+export { default as Sendmessage } from './sendMessage.svg';
+export { default as Settings } from './settings.svg';
+export { default as Silvermedal } from './silverMedal.svg';
+export { default as Swipeleft } from './swipeLeft.svg';
+export { default as Swiperight } from './swipeRight.svg';
+export { default as Timer } from './timer.svg';
+export { default as Trophy } from './trophy.svg';
+export { default as Volumedown } from './volumeDown.svg';
+export { default as Voulueup } from './voulueUp.svg';
+export { default as Warning } from './warning.svg';
+export { default as Wronganswer } from './wrongAnswer.svg';
+export { default as BismiAllah } from './bismiAllah.svg';
+export { default as Pattern } from './pattern.svg';
+export { default as LogoQuizzUmmah } from './logoQuizzUmmah.svg';
