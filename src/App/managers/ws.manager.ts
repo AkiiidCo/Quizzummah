@@ -45,7 +45,7 @@ export default class WSManager extends EventEmitter {
 		Pusher.log = (msg) => {
 			console.debug(msg);
 		};
-		WSManager._ws = new Pusher(process.env.REACT_APP_WEBSOCKET_KEY, {
+		WSManager._ws = new Pusher(import.meta.env.VITE_WEBSOCKET_KEY, {
 			cluster: 'us2',
 			// wsHost: 'localhost', wsPort: 6001, wssPort: 6001, httpHost: 'http://localhost', httpPort: 5690, httpsPort: 5690
 			wsHost: 'localhost',

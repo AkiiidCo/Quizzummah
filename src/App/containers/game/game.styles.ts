@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { column, column_center_both, container, row, row_center_both } from '../../styles/styles-helpers';
-import Icons from '../../Images';
+
 export const GameContainer = styled.div`
 	${container}
 	height: 100vh;
@@ -11,7 +11,7 @@ export const GameHeaderContainer = styled.div`
 	gap: 2rem;
 	margin: 3rem 0;
 `;
-export const MasjidIllustartion = styled(Icons.Masjid)`
+export const MasjidIllustartion = styled.img`
 	max-width: 200px;
 	max-height: 200px;
 `;

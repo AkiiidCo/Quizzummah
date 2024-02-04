@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { QUAnswerBadge, QUAnswerItemContainer, QUAnswerLetter, QUAnswerText } from './qu-answer-item.styles';
-import Icons from '../../Images';
+import { Rightanswer, Wronganswer } from '../../Images';
 
 export interface QUAnswerItemProps {
 	AnswerIndex?;
@@ -36,7 +35,7 @@ export const QUAnswerItem: React.FC<QUAnswerItemProps> = ({ AnswerIndex = 0, sho
 				{letter}
 			</QUAnswerLetter>
 			<QUAnswerText>{content}</QUAnswerText>
-			{showCorrect && <QUAnswerBadge>{correct ? <Icons.Rightanswer /> : <Icons.Wronganswer />}</QUAnswerBadge>}
+			{showCorrect && <QUAnswerBadge>{correct ? <img src={Rightanswer} /> : <img src={Wronganswer} />}</QUAnswerBadge>}
 		</QUAnswerItemContainer>
 	);
 };

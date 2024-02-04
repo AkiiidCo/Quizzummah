@@ -22,7 +22,7 @@ jobs:
             - name: Deploy
               uses: reggionick/s3-deploy@v4
               with:
-                  folder: build
+                  folder: dist
                   bucket: ${{ secrets.AWS_S3_BUCKET }}
                   bucket-region: us-east-1
                   dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}

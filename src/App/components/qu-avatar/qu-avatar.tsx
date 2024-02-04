@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import Icons from '../../Images';
+import { Bronzemedal, Camel, Goldmedal, Silvermedal } from '../../Images';
 import { SIZE } from '../../utils/Enums';
 import { QUAvatarBadgenumber, QUAvatarBadgePlace, QUAvatarBadges, QUAvatarContainer } from './qu-avatar.styles';
 
@@ -11,16 +10,16 @@ export interface QUAvatarProps {
 	showBadges?;
 }
 
-export const QUAvatar: React.FC<QUAvatarProps> = ({ img = <Icons.Camel />, color, Place, showBadges, size }) => {
+export const QUAvatar: React.FC<QUAvatarProps> = ({ img = <img src={Camel} />, color, Place, showBadges, size }) => {
 	return (
 		<QUAvatarContainer color={color} size={size}>
 			{img}
 			{showBadges && (
 				<QUAvatarBadges size={size}>
 					<QUAvatarBadgePlace size={size}>
-						{Place === 1 && <Icons.Goldmedal />}
-						{Place === 2 && <Icons.Silvermedal />}
-						{Place === 3 && <Icons.Bronzemedal />}
+						{Place === 1 && <img src={Goldmedal} />}
+						{Place === 2 && <img src={Silvermedal} />}
+						{Place === 3 && <img src={Bronzemedal} />}
 					</QUAvatarBadgePlace>
 					<QUAvatarBadgenumber size={size}>{Place}</QUAvatarBadgenumber>
 				</QUAvatarBadges>

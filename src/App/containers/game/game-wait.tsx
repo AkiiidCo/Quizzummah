@@ -14,6 +14,7 @@ import {
 	MasjidIllustartion,
 } from './game.styles';
 import { QUButton } from '../../components/qu-button/qu-button';
+import { Masjid } from '../../Images';
 
 export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement => {
 	const { room, host, username } = useAppSelector((state: RootState) => state.game);
@@ -27,7 +28,7 @@ export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement
 	return (
 		<GameContainer>
 			<GameHeaderContainer>
-				<MasjidIllustartion />
+				<MasjidIllustartion src={Masjid} />
 				<GameDescriptionContainer>
 					<GameDescriptionLabel>Go to</GameDescriptionLabel>
 					<GameDescription>quizzummah.com</GameDescription>

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { GlobalColors, Rules, Styles } from '../../styles/global-styles';
-import { row, row_center_both, row_center_vertical } from '../../styles/styles-helpers';
-import Icons from '../../Images';
+import { row_center_both, row_center_vertical } from '../../styles/styles-helpers';
 
 export const QUPlayeritemContainer = styled.div`
 	${row_center_vertical}
@@ -41,7 +40,7 @@ export const QUPlayerScore = styled.div`
 	gap: 8px;
 	font-weight: 900;
 `;
-export const QUPlayerPointIcon = styled(Icons.Pointsicon)`
+export const QUPlayerPointIcon = styled.img`
 	height: 32px;
 	width: 32px;
 `;

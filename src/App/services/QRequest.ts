@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 if (process.env.NODE_ENV !== 'production') {
-	sessionStorage.setItem('token', process.env.REACT_APP_TOKEN);
+	sessionStorage.setItem('token', import.meta.env.VITE_TOKEN);
 }
 
 const QRequest = axios.create({
-	baseURL: process.env.REACT_APP_API_SERVER,
+	baseURL: import.meta.env.VITE_API_SERVER,
 	method: 'GET',
 });
 
