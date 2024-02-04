@@ -20,6 +20,7 @@ const settings: {
 
 const game: {
 	host: boolean;
+	onlyDisplay: boolean;
 	gameToken: string;
 	gameId: string;
 	room: string;
@@ -27,6 +28,7 @@ const game: {
 	status: WSStatus;
 } = {
 	host: false,
+	onlyDisplay: false,
 	gameToken: '',
 	gameId: '',
 	room: '',

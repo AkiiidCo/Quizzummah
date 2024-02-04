@@ -15,18 +15,14 @@ import {
 } from './game.styles';
 import { QUButton } from '../../components/qu-button/qu-button';
 
-export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement => {
+export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement => {
 	const { room, host, username } = useAppSelector((state: RootState) => state.game);
 
 	const startGame = async () => {
 		if (host) {
-			const { data } = await QRequest.get('/gamerun/proceed');
-			console.log('data: ', data);
+			await QRequest.get('/gamerun/proceed');
 		}
 	};
-
-	// for testing
-	const users = ['user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1', 'user1'];
 
 	return (
 		<GameContainer>
@@ -48,7 +44,7 @@ export const GameWaitScreen = ({ gameState }: { gameState: any }): ReactElement 
 				</GameDescriptionContainer>
 			</GameHeaderContainer>
 			<GameAvatarContainer>
-				{users.map((item) => (
+				{players.map((item) => (
 					<GameAvatarItem>
 						<QUAvatar key={item} />
 						<span>{item}</span>

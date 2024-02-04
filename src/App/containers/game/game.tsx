@@ -1,30 +1,33 @@
-import { ReactElement, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import WSManager, { WSStatus } from '../../managers/ws.manager';
 import { updateStatus } from '../../redux/slices/game.slice';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/store';
-import { GameIntermissionScreen } from './game-intermission';
-import { GameQuestionScreen } from './game-question';
-import { GameResultsScreen } from './game-results';
 import { GameWaitScreen } from './game-wait';
+import { GameQuestionScreen } from './game-question';
+import { GameIntermissionScreen } from './game-intermission';
+import { GameResultsScreen } from './game-results';
 
-export enum GameScreen {
+export enum GamePage {
 	WAIT = 'wait',
 	QUESTION = 'question',
+	INTERMISSION = 'intermission',
 	RESULTS = 'results',
 }
 
-export const Game = (): ReactElement => {
+export const Game = () => {
 	const navigation = useNavigate();
-	const status = useAppSelector((state: RootState) => state.game.status);
-	const host = useAppSelector((state: RootState) => state.game.host);
+	const location = useLocation();
 	const gameToken = useAppSelector((state: RootState) => state.game.gameToken);
-	const [screen, setScreen] = useState<GameScreen>(GameScreen.WAIT);
-	const [question, setQuestion] = useState<any>(null);
+	const [page, setPage] = useState<GamePage>(GamePage.WAIT);
+	const [players, setPlayers] = useState<string[]>([]);
 	const [gameState, setGameState] = useState<any>(null);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
+		setPlayers(location.state?.players ?? []);
+		setPage(location.state?.page ?? GamePage.WAIT);
+
 		if (!gameToken) {
 			navigation('/');
 		} else {
@@ -40,34 +43,29 @@ export const Game = (): ReactElement => {
 	}, []);
 
 	const handleMessage = (message: any) => {
-		console.log('handleMessage: ', message);
-		if (message.eventName === 'gamestate') {
-			setGameState(message);
-			if (message.page) {
-				// if (message.page === 'question') {
-				// 	setQuestion(message.question[0]);
-				// }
-				setScreen(message.page);
-			}
+		switch (message.eventName) {
+			case 'gamestate':
+				if (message.page) {
+					setPage(message.page);
+				}
+				setGameState(message);
+				break;
+			case 'gamejoin':
+			case 'gameleave':
+				setPlayers(message.players);
+				break;
+			default:
+				break;
 		}
-		// if (message.event === 'state') {
-		// 	dispatch(updateStates(message.body));
-		// } else if (message.type === 'chat') {
-		// 	dispatch(updateChatList(message.data));
-		// 	if (store.getState().settings.vibrateOnMessage) {
-		// 		Vibration.vibrate();
-		// 	}
-		// }
 	};
 
-	switch (screen) {
-		case GameScreen.WAIT:
-			return <GameWaitScreen gameState={gameState} />;
-		// case GameScreen.INTERMISSION:
-		// 	return <GameIntermissionScreen />;
-		case GameScreen.QUESTION:
-			return <GameQuestionScreen gameState={gameState} />;
-		case GameScreen.RESULTS:
-			return <GameResultsScreen gameState={gameState} />;
-	}
+	return gameState && page === GamePage.QUESTION ? (
+		<GameQuestionScreen gameState={gameState} />
+	) : gameState && page === GamePage.INTERMISSION ? (
+		<GameIntermissionScreen gameState={gameState} />
+	) : gameState && page === GamePage.RESULTS ? (
+		<GameResultsScreen gameState={gameState} />
+	) : (
+		<GameWaitScreen players={players} />
+	);
 };

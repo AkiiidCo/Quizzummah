@@ -4,41 +4,44 @@ import { QUButton } from '../../components/qu-button/qu-button';
 import { RootState, useAppSelector } from '../../redux/store';
 import QRequest from '../../services/QRequest';
 import { GameAnswersWrapper, GameContainer, GameDescriptionLabel, GameQuestion, GameQuestionWrapper, GamesAnswersNextBtnWrapper } from './game.styles';
+import Countdown from 'react-countdown';
 
 export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElement => {
-	const { room, host, username } = useAppSelector((state: RootState) => state.game);
+	const { room, host, onlyDisplay, username } = useAppSelector((state: RootState) => state.game);
+	const [loading, setLoading] = useState(false);
 	const [answered, setAnswered] = useState(false);
 	const [answeredIndex, setAnsweredIndex] = useState(null);
 
 	useEffect(() => {
 		setAnswered(false);
-	}, [gameState]);
+	}, [gameState, host]);
 
 	const next = async () => {
 		if (host) {
-			const { data } = await QRequest.get('/gamerun/proceed');
-			console.log('data: ', data);
+			setLoading(true);
+			await QRequest.get('/gamerun/proceed');
 		}
 	};
 
 	const selectedAnswer = async (answerId, index) => {
-		if (!host) {
+		if (!onlyDisplay) {
 			setAnswered(true);
 			setAnsweredIndex(index);
-			const { data } = await QRequest.post('/gamerun/submit', { answer: answerId });
-			console.log('data: ', data);
+			await QRequest.post('/gamerun/submit', { answer: answerId });
 		}
 	};
+
+	const countdownRenderer = ({ minutes, seconds, completed }) => <span>{completed ? <span>Time's up!</span> : <span>{seconds < 10 ? `0${seconds}` : seconds} seconds</span>}</span>;
 
 	return (
 		<GameContainer>
 			<GameQuestionWrapper>
 				<div>
 					<GameDescriptionLabel>
-						{host ? 'host' : username} - {room}
+						{username} - {room}
 					</GameDescriptionLabel>
 					<GameDescriptionLabel>Question Number {gameState.questionNumber + 1}</GameDescriptionLabel>
-					<GameQuestion host={host}>{gameState.question[0]?.question}</GameQuestion>
+					<GameQuestion host={host && onlyDisplay}>{gameState.question[0]?.question}</GameQuestion>
 					{answered ? (
 						<>
 							<GameDescriptionLabel>You answered</GameDescriptionLabel>
@@ -63,7 +66,10 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 						</>
 					)}
 				</div>
-				<GamesAnswersNextBtnWrapper>{host && <QUButton onClick={next} title="Next question" />}</GamesAnswersNextBtnWrapper>
+				{gameState.timeEnds && <Countdown renderer={countdownRenderer} date={gameState.timeEnds} onComplete={next} />}
+				<GamesAnswersNextBtnWrapper>
+					{host && onlyDisplay && <QUButton disabled={loading} onClick={next} title={gameState.questionNumber < gameState.maxQuestions ? 'Next question' : 'Finish'} />}
+				</GamesAnswersNextBtnWrapper>
 			</GameQuestionWrapper>
 		</GameContainer>
 	);
