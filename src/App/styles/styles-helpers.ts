@@ -1,21 +1,5 @@
 import { css } from 'styled-components';
 import { GlobalColors } from './global-styles';
-import { Theme, createStyles } from '@mui/material';
-
-export const popoverStyles = {
-	main: (theme: Theme) =>
-		createStyles({
-			popover: {
-				pointerEvents: 'none',
-				color: `${GlobalColors.white2}`,
-			},
-			paper: {
-				backgroundColor: `${GlobalColors.neutral2}`,
-				padding: theme.spacing(1),
-				width: '173px',
-			},
-		}),
-};
 
 export const flex: any = css`
 	display: flex;
