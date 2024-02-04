@@ -57,27 +57,21 @@ export default class WSManager extends EventEmitter {
 		});
 
 		WSManager._wsChannel = WSManager._ws.subscribe(gameId);
-		// WSManager._wsChannel.bind('data', (body) => {
-		WSManager._ws.bind_global((eventName, body) => {
-			console.debug('eventName: ', eventName, '\nbody: ', body);
-
-			WSManager.emit('message', { eventName, ...(body?.state ?? body ?? {}) });
-			// if (eventName === 'gamestate') {
-			// if (body) {
-			// 	// const body = JSON.parse(e.data);
-			// 	if (body.context) {
-			// 		const promise = WSManager._promises[body.context];
-			// 		if (promise) {
-			// 			if (body.error === 'error') {
-			// 				promise.reject(new Error(body.error));
-			// 			} else {
-			// 				promise.resolve(body);
-			// 			}
-			// 			delete WSManager._promises[body.context];
-			// 		}
-			// 	}
-			// }
-			// }
+		WSManager._ws.bind('gamestate', (body) => {
+			console.debug('[Pusher] gamestate: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gamestate', ...(body?.state ?? body ?? {}) });
+		});
+		WSManager._ws.bind('gameplayers', (body) => {
+			console.debug('[Pusher] gameplayers: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gameplayers', ...(body?.state ?? body ?? {}) });
+		});
+		WSManager._ws.bind('gameover', (body) => {
+			console.debug('[Pusher] gameover: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gameover', ...(body?.state ?? body ?? {}) });
+		});
+		WSManager._ws.bind('gamechat', (body) => {
+			console.debug('[Pusher] gamechat: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gamechat', ...(body?.state ?? body ?? {}) });
 		});
 
 		WSManager._ws.connection.bind('error', function (err) {
