@@ -75,7 +75,7 @@ export const Game = () => {
 	return gameState && page === GamePage.QUESTION ? (
 		<GameQuestionScreen gameState={gameState} />
 	) : gameState && page === GamePage.INTERMISSION ? (
-		<GameIntermissionScreen gameState={gameState} />
+		<GameIntermissionScreen gameState={gameState} players={players} />
 	) : gameState && page === GamePage.RESULTS ? (
 		<GameResultsScreen gameState={gameState} />
 	) : (
