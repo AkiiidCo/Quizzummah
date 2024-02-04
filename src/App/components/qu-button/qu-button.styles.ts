@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { GlobalColors } from '../../styles/global-styles';
 import { btn_default, row_center_both } from '../../styles/styles-helpers';
 
-export const QUButtonContainer = styled.a<{ small?: boolean; outlined?: boolean }>`
+export const QUButtonContainer = styled.a<{ small?: boolean; outlined?: boolean; disabled?: boolean }>`
 	${btn_default}
 	${row_center_both}
 	${({ small }) => small && `max-width: 250px;`}
@@ -31,6 +31,12 @@ export const QUButtonContainer = styled.a<{ small?: boolean; outlined?: boolean 
 		color: ${GlobalColors.white} !important;
 		border: 2px solid ${GlobalColors.darkBlue90};
 	}
+	${({ disabled }) =>
+		disabled &&
+		`
+		opacity: 0.5;
+		pointer-events: none;
+	`}
 `;
 export const QUButtonStartIcon = styled.div`
 	max-width: 48px;

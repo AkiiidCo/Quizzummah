@@ -40,11 +40,10 @@ export default class WSManager extends EventEmitter {
 		}
 
 		const gameId = store.getState().game.gameId;
-		const host = store.getState().game.host;
 
 		Pusher.logToConsole = true;
 		Pusher.log = (msg) => {
-			console.log(msg);
+			console.debug(msg);
 		};
 		WSManager._ws = new Pusher(process.env.REACT_APP_WEBSOCKET_KEY, {
 			cluster: 'us2',
@@ -58,50 +57,48 @@ export default class WSManager extends EventEmitter {
 		});
 
 		WSManager._wsChannel = WSManager._ws.subscribe(gameId);
-		if (host) {
-			WSManager._wsChannelHost = WSManager._ws.subscribe(`${gameId}-host`);
-		}
 		// WSManager._wsChannel.bind('data', (body) => {
 		WSManager._ws.bind_global((eventName, body) => {
-			console.log('eventName: ', eventName, '\nbody: ', body);
+			console.debug('eventName: ', eventName, '\nbody: ', body);
 
-			if (eventName === 'gamestate') {
-				WSManager.emit('message', { eventName, ...(body?.state ?? {}) });
-				// if (body) {
-				// 	// const body = JSON.parse(e.data);
-				// 	if (body.context) {
-				// 		const promise = WSManager._promises[body.context];
-				// 		if (promise) {
-				// 			if (body.error === 'error') {
-				// 				promise.reject(new Error(body.error));
-				// 			} else {
-				// 				promise.resolve(body);
-				// 			}
-				// 			delete WSManager._promises[body.context];
-				// 		}
-				// 	}
-				// }
-			}
+			WSManager.emit('message', { eventName, ...(body?.state ?? body ?? {}) });
+			// if (eventName === 'gamestate') {
+			// if (body) {
+			// 	// const body = JSON.parse(e.data);
+			// 	if (body.context) {
+			// 		const promise = WSManager._promises[body.context];
+			// 		if (promise) {
+			// 			if (body.error === 'error') {
+			// 				promise.reject(new Error(body.error));
+			// 			} else {
+			// 				promise.resolve(body);
+			// 			}
+			// 			delete WSManager._promises[body.context];
+			// 		}
+			// 	}
+			// }
+			// }
 		});
 
 		WSManager._ws.connection.bind('error', function (err) {
-			if (err.error.data.code === 4004) {
-				console.log('Over limit!');
+			console.debug('WS Error: ', err);
+			if (err.error?.data.code === 4004) {
+				console.debug('Over limit!');
 			}
 		});
 
 		// WSManager._ws.connection.bind('connected', () => {
 		WSManager._wsChannel.bind('pusher:subscription_succeeded', () => {
-			console.log('CONNECTED');
+			console.debug('CONNECTED');
 			WSManager._status = WSStatus.CONNECTED;
 			WSManager.emit('status', WSStatus.CONNECTED);
 			// var triggered = WSManager._wsChannel.trigger('client-event', { wow: 2 });
-			// console.log('triggered: ', triggered);
+			// console.debug('triggered: ', triggered);
 		});
 
 		// WSManager._ws.connection.bind('error', (error) => {
 		WSManager._wsChannel.bind('pusher:subscription_error', (error) => {
-			console.log('error', error);
+			console.debug('error', error);
 			WSManager.emit('error', error.error);
 			WSManager.reconnectTimer();
 		});
@@ -114,13 +111,11 @@ export default class WSManager extends EventEmitter {
 	};
 
 	static disconnect = () => {
-		if (WSManager._ws) {
-			// WSManager._wsChannel.unsubscribe(channelName);
-			WSManager._wsChannel.unbind_all();
-			WSManager._wsChannelHost.unbind_all();
-			WSManager._ws.disconnect();
-			WSManager._ws = null;
-		}
+		// WSManager._wsChannel?.unsubscribe(channelName);
+		WSManager._wsChannel?.unbind_all();
+		WSManager._wsChannelHost?.unbind_all();
+		WSManager._ws?.disconnect();
+		WSManager._ws = null;
 	};
 
 	static reconnectTimer = () => {
@@ -148,7 +143,6 @@ export default class WSManager extends EventEmitter {
 			try {
 				if (WSManager._ws?.connection.state === 'connected') {
 					body.context = WSManager._currentId;
-					body.lsorigin = 'lumiastreamlink';
 					// WSManager._ws.send(JSON. pstringify(body));
 					WSManager._promises[WSManager._currentId] = { resolve, reject };
 					WSManager._currentId++;

@@ -7,9 +7,6 @@ if (process.env.NODE_ENV !== 'production') {
 const QRequest = axios.create({
 	baseURL: process.env.REACT_APP_API_SERVER,
 	method: 'GET',
-	onUploadProgress: (event) => {
-		console.debug(event);
-	},
 });
 
 QRequest.interceptors.request.use((config) => {
