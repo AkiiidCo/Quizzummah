@@ -9,11 +9,10 @@ import Countdown from 'react-countdown';
 export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElement => {
 	const { room, host, onlyDisplay, username } = useAppSelector((state: RootState) => state.game);
 	const [loading, setLoading] = useState(false);
-	const [answered, setAnswered] = useState(false);
-	const [answeredIndex, setAnsweredIndex] = useState(null);
+	const [answeredId, setAnsweredId] = useState(null);
 
 	useEffect(() => {
-		setAnswered(false);
+		setAnsweredId(null);
 	}, [gameState, host]);
 
 	const next = async () => {
@@ -23,10 +22,9 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 		}
 	};
 
-	const selectedAnswer = async (answerId, index) => {
+	const selectedAnswer = async (answerId) => {
 		if (!onlyDisplay) {
-			setAnswered(true);
-			setAnsweredIndex(index);
+			setAnsweredId(answerId);
 			await QRequest.post('/gamerun/submit', { answer: answerId });
 		}
 	};
@@ -41,30 +39,13 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 						{username} - {room}
 					</GameDescriptionLabel>
 					<GameDescriptionLabel>Question Number {gameState.questionNumber + 1}</GameDescriptionLabel>
-					<GameQuestion host={host && onlyDisplay}>{gameState.question[0]?.question}</GameQuestion>
-					{answered ? (
-						<>
-							<GameDescriptionLabel>You answered</GameDescriptionLabel>
-							<QUAnswerItem AnswerIndex={answeredIndex} content={gameState.question[0]?.answers[answeredIndex].answer} checked={true} />
-						</>
-					) : (
-						<>
-							<GameDescriptionLabel>Answers</GameDescriptionLabel>
-							<GameAnswersWrapper>
-								{gameState.question[0]?.answers.map((answer, index) => {
-									return (
-										<QUAnswerItem
-											AnswerIndex={index}
-											content={answer.answer}
-											onClick={() => selectedAnswer(answer.id, index)}
-											checked={selectedAnswer === answer.id}
-											key={answer.id}
-										/>
-									);
-								})}
-							</GameAnswersWrapper>
-						</>
-					)}
+					<GameQuestion host={host && onlyDisplay}>{gameState.question?.question}</GameQuestion>
+					<GameDescriptionLabel>Answers</GameDescriptionLabel>
+					<GameAnswersWrapper>
+						{gameState.question?.answers.map((answer, index) => {
+							return <QUAnswerItem AnswerIndex={index} content={answer.answer} onClick={() => selectedAnswer(answer.id)} checked={answeredId === answer.id} key={answer.id} />;
+						})}
+					</GameAnswersWrapper>
 				</div>
 				{gameState.timeEnds && <Countdown renderer={countdownRenderer} date={gameState.timeEnds} onComplete={next} />}
 				<GamesAnswersNextBtnWrapper>

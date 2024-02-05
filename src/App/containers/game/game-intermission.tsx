@@ -6,7 +6,6 @@ import { GameAnswersWrapper, GameDescriptionLabel, GameQuestion } from './game.s
 import { QUAnswerItem } from '../../components/qu-answer-item/qu-answer-item';
 
 export const GameIntermissionScreen = ({ gameState, players }: { gameState: any; players: string[] }): ReactElement => {
-	console.log('gameState: ', gameState);
 	const { host } = useAppSelector((state: RootState) => state.game);
 	const username = useAppSelector((state: RootState) => state.game.username);
 	const [loading, setLoading] = useState(false);
@@ -24,11 +23,11 @@ export const GameIntermissionScreen = ({ gameState, players }: { gameState: any;
 		<div>
 			Game Intermission Screen
 			<GameDescriptionLabel>Question Number {gameState.questionNumber + 1}</GameDescriptionLabel>
-			<GameQuestion>{gameState.question[0]?.question}</GameQuestion>
+			<GameQuestion>{gameState.question?.question}</GameQuestion>
 			<div>
 				<GameDescriptionLabel>Answers</GameDescriptionLabel>
 				<GameAnswersWrapper>
-					{gameState.question[0]?.answers.map((answer, index) => {
+					{gameState.question?.answers.map((answer, index) => {
 						return (
 							<QUAnswerItem
 								AnswerIndex={index}
@@ -41,6 +40,15 @@ export const GameIntermissionScreen = ({ gameState, players }: { gameState: any;
 					})}
 				</GameAnswersWrapper>
 			</div>
+			{gameState.question?.proof && (
+				<div>
+					<div>Proof</div>
+					<div>{gameState.question?.proof}</div>
+				</div>
+			)}
+			{/* <div>
+				This question was answered correct {gameState.question?.total_correct / gameState.question?.total_used}% ({gameState.question?.total_correct} times)
+			</div> */}
 			<div>
 				<div>Scores:</div>
 				{players.map((player) => (
