@@ -17,6 +17,16 @@ export const GameResultsScreen = ({ gameState }: { gameState: any }): ReactEleme
 	return (
 		<div>
 			<div>Game Results Screen</div>
+
+			<div>
+				<div>Scores:</div>
+				{Object.keys(gameState.scores).map((player) => (
+					<div>
+						{player} - {gameState.scores?.[player] ?? 0}
+					</div>
+				))}
+			</div>
+
 			<GamesAnswersNextBtnWrapper>
 				<QUButton onClick={home} title={'Home'} />
 			</GamesAnswersNextBtnWrapper>
