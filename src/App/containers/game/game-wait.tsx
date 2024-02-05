@@ -46,8 +46,8 @@ export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement
 			</GameHeaderContainer>
 			<GameAvatarContainer>
 				{players.map((item) => (
-					<GameAvatarItem>
-						<QUAvatar key={item} />
+					<GameAvatarItem key={item}>
+						<QUAvatar />
 						<span>{item}</span>
 					</GameAvatarItem>
 				))}

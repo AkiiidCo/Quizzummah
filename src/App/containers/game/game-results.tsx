@@ -2,12 +2,15 @@ import { ReactElement, useEffect } from 'react';
 import { GamesAnswersNextBtnWrapper } from './game.styles';
 import { QUButton } from '../../components/qu-button/qu-button';
 import { useNavigate } from 'react-router';
+import WSManager from '../../managers/ws.manager';
 
 export const GameResultsScreen = ({ gameState }: { gameState: any }): ReactElement => {
 	const navigation = useNavigate();
 
 	useEffect(() => {
 		sessionStorage.removeItem('gameToken');
+		WSManager.disconnect();
+		WSManager.removeAllListeners();
 	}, []);
 
 	const home = () => {
