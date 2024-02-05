@@ -18,6 +18,7 @@ export enum GamePage {
 export const Game = () => {
 	const navigation = useNavigate();
 	const location = useLocation();
+	const isHost = useAppSelector((state: RootState) => state.game.host);
 	const gameToken = useAppSelector((state: RootState) => state.game.gameToken);
 	const [page, setPage] = useState<GamePage>(GamePage.WAIT);
 	const [players, setPlayers] = useState<string[]>([]);
@@ -36,9 +37,22 @@ export const Game = () => {
 			WSManager.addListener('message', handleMessage);
 		}
 
+		const listener = (event: BeforeUnloadEvent) => {
+			event.preventDefault();
+			event.returnValue = 'Leaving will cause the game to end. Are you sure?';
+			return event.returnValue;
+		};
+
+		if (isHost) {
+			window.addEventListener('beforeunload', listener);
+		}
+
 		return () => {
 			WSManager.disconnect();
 			WSManager.removeAllListeners();
+			if (isHost) {
+				globalThis.removeEventListener('beforeunload', listener);
+			}
 		};
 	}, []);
 
@@ -50,8 +64,7 @@ export const Game = () => {
 				}
 				setGameState(message);
 				break;
-			case 'gamejoin':
-			case 'gameleave':
+			case 'gameplayers':
 				setPlayers(message.players);
 				break;
 			default:
@@ -62,7 +75,7 @@ export const Game = () => {
 	return gameState && page === GamePage.QUESTION ? (
 		<GameQuestionScreen gameState={gameState} />
 	) : gameState && page === GamePage.INTERMISSION ? (
-		<GameIntermissionScreen gameState={gameState} />
+		<GameIntermissionScreen gameState={gameState} players={players} />
 	) : gameState && page === GamePage.RESULTS ? (
 		<GameResultsScreen gameState={gameState} />
 	) : (

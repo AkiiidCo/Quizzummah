@@ -21,7 +21,6 @@ export default class WSManager extends EventEmitter {
 	private static _status = WSStatus.DISCONNECTED;
 	private static _ws: Pusher;
 	private static _wsChannel: Channel;
-	private static _wsChannelHost: Channel;
 	private static _currentId = 1;
 	private static _promises: { [key: string]: any } = {};
 	private static _timer: ReturnType<typeof setTimeout>;
@@ -39,8 +38,6 @@ export default class WSManager extends EventEmitter {
 			WSManager.disconnect();
 		}
 
-		const gameId = store.getState().game.gameId;
-
 		Pusher.logToConsole = true;
 		Pusher.log = (msg) => {
 			console.debug(msg);
@@ -56,28 +53,22 @@ export default class WSManager extends EventEmitter {
 			forceTLS: false,
 		});
 
-		WSManager._wsChannel = WSManager._ws.subscribe(gameId);
-		// WSManager._wsChannel.bind('data', (body) => {
-		WSManager._ws.bind_global((eventName, body) => {
-			console.debug('eventName: ', eventName, '\nbody: ', body);
-
-			WSManager.emit('message', { eventName, ...(body?.state ?? body ?? {}) });
-			// if (eventName === 'gamestate') {
-			// if (body) {
-			// 	// const body = JSON.parse(e.data);
-			// 	if (body.context) {
-			// 		const promise = WSManager._promises[body.context];
-			// 		if (promise) {
-			// 			if (body.error === 'error') {
-			// 				promise.reject(new Error(body.error));
-			// 			} else {
-			// 				promise.resolve(body);
-			// 			}
-			// 			delete WSManager._promises[body.context];
-			// 		}
-			// 	}
-			// }
-			// }
+		WSManager._wsChannel = WSManager._ws.subscribe(store.getState().game.gameId);
+		WSManager._ws.bind('gamestate', (body) => {
+			console.debug('[Pusher] gamestate: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gamestate', ...(body?.state ?? body ?? {}) });
+		});
+		WSManager._ws.bind('gameplayers', (body) => {
+			console.debug('[Pusher] gameplayers: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gameplayers', ...(body?.state ?? body ?? {}) });
+		});
+		WSManager._ws.bind('gameover', (body) => {
+			console.debug('[Pusher] gameover: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gameover', ...(body?.state ?? body ?? {}) });
+		});
+		WSManager._ws.bind('gamechat', (body) => {
+			console.debug('[Pusher] gamechat: ', '\nbody: ', body);
+			WSManager.emit('message', { eventName: 'gamechat', ...(body?.state ?? body ?? {}) });
 		});
 
 		WSManager._ws.connection.bind('error', function (err) {
@@ -111,11 +102,11 @@ export default class WSManager extends EventEmitter {
 	};
 
 	static disconnect = () => {
-		// WSManager._wsChannel?.unsubscribe(channelName);
 		WSManager._wsChannel?.unbind_all();
-		WSManager._wsChannelHost?.unbind_all();
+		WSManager._wsChannel?.unsubscribe();
 		WSManager._ws?.disconnect();
 		// @ts-ignore
+		WSManager._wsChannel = null;
 		WSManager._ws = null;
 	};
 
