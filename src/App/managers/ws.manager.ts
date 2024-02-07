@@ -42,15 +42,15 @@ export default class WSManager extends EventEmitter {
 		Pusher.log = (msg) => {
 			console.debug(msg);
 		};
+
+		const isLocal = import.meta.env.VITE_WEBSOCKET_LOCAL === 'true';
 		WSManager._ws = new Pusher(import.meta.env.VITE_WEBSOCKET_KEY, {
 			cluster: 'us2',
-			// wsHost: 'localhost', wsPort: 6001, wssPort: 6001, httpHost: 'http://localhost', httpPort: 5690, httpsPort: 5690
 			wsHost: import.meta.env.VITE_WEBSOCKET_HOST,
-			wsPort: import.meta.env.VITE_WEBSOCKET_PORT,
-			// httpHost: 'http://localhost',
-			// httpPort: 80,
+			wsPort: isLocal && import.meta.env.VITE_WEBSOCKET_PORT,
+			wssPort: !isLocal && import.meta.env.VITE_WEBSOCKET_PORT,
 			enabledTransports: ['ws'],
-			forceTLS: false,
+			forceTLS: !isLocal,
 		});
 
 		WSManager._wsChannel = WSManager._ws.subscribe(store.getState().game.gameId);
