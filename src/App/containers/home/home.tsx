@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../redux/store';
 import QRequest from '../../services/QRequest';
 import { BismiAllah, Creategame, LogoQuizzUmmah, Masjid, Play } from '../../Images';
 import { QUButton } from '../../components/qu-button/qu-button';
-import { HomeContainer, HomeHeader, HomeHero, HomeRightSection, HomeLeftSection, HomeInputs, HomeFooter, HomeLink, HomeQuizzummahLogo } from './home.styles';
+import { HomeContainer, HomeHero, HomeRightSection, HomeInputs, HomeFooter, HomeLink } from './home.styles';
 
 export const Home = (): ReactElement => {
 	const dispatch = useAppDispatch();
@@ -47,20 +47,19 @@ export const Home = (): ReactElement => {
 
 	return (
 		<HomeContainer>
-			<HomeHeader>
+			<div className="flex justify-center flex-row pt-4 items-center">
 				<img src={BismiAllah} />
-				<div />
 				{/* <HeaderSettingsBtn>
 					<img src={Settings} />
 					Settings
 				</HeaderSettingsBtn> */}
-			</HomeHeader>
+			</div>
 			<HomeHero>
-				<HomeLeftSection>
-					<img src={Masjid} />
-				</HomeLeftSection>
+				<div className="flex-shrink  flex-[300px] w-300 flex-row items-center hidden md:flex">
+					<img src={Masjid} className="w-full" />
+				</div>
 				<HomeRightSection>
-					<HomeQuizzummahLogo src={LogoQuizzUmmah} />
+					<img src={LogoQuizzUmmah} className=" w-3/5 mb-12 md:w-full" />
 
 					<div className="items-center text-darkBlue">Enter name</div>
 					<HomeInputs>
@@ -74,15 +73,15 @@ export const Home = (): ReactElement => {
 					<QUButton disabled={loading || !username} title="Create game" onClick={createGame} small outlined LeftIcon={<img src={Creategame} />} />
 				</HomeRightSection>
 			</HomeHero>
-			<HomeFooter>
-				<div className="items-center text-darkBlue mt-4">
+			{/* <HomeFooter>
+				<div className="items-center text-darkBlue mt-4 text-center">
 					Contribute to QuizzUmmah by
 					<HomeLink href="https://forms.gle/Q293AdE1eBJez7U28" target="_blank">
 						{' '}
 						Submiting a question
 					</HomeLink>
 				</div>
-			</HomeFooter>
+			</HomeFooter> */}
 		</HomeContainer>
 	);
 };

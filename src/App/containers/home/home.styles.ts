@@ -7,14 +7,6 @@ export const HomeContainer = styled.div`
 	${column}
 	gap: 1rem;
 `;
-export const HomeHeader = styled.div`
-	${row_center_between}
-	${before}
-	&::before {
-		width: 100px;
-	}
-	padding-top: 1rem;
-`;
 export const HeaderSettingsBtn = styled.button`
 	${row_center_both}
 	${btn_default}
@@ -28,18 +20,6 @@ export const HomeRightSection = styled.div`
 	flex: 1 1 300px;
 	${column_center_horizontal}
 	gap: 16px;
-`;
-export const HomeQuizzummahLogo = styled.img`
-	margin-bottom: 3rem;
-	width: 100%;
-`;
-
-export const HomeLeftSection = styled.div`
-	${row_center_both}
-	flex: 1 1 300px;
-	img {
-		width: 100%;
-	}
 `;
 export const HomeInputs = styled.div`
 	${column}
