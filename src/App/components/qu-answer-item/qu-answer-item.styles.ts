@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { GlobalColors, Rules, Styles } from '../../styles/global-styles';
 import { row_center_both, row_center_vertical } from '../../styles/styles-helpers';
 
-export const QUAnswerItemContainer = styled.label<{ checked?: boolean; correct?: boolean; showCorrect?: boolean }>`
+export const QUAnswerItemContainer = styled.label<{ checked?: boolean; correct?: boolean; showCorrect?: boolean; disabled?: boolean }>`
 	${({ checked }) => (checked ? `background-color: ${GlobalColors.lightBlue};color:${GlobalColors.white};` : `background-color: ${GlobalColors.white};color:${GlobalColors.darkBlue};`)};
 	${({ correct, showCorrect }) =>
 		showCorrect && correct
@@ -12,8 +12,8 @@ background-color: ${GlobalColors.white};
 color:${GlobalColors.darkBlue};
 `
 			: showCorrect &&
-			  !correct &&
-			  `
+				!correct &&
+				`
 border: 1px solid ${GlobalColors.answerRed};
 background-color: ${GlobalColors.white};
 color:${GlobalColors.darkBlue};
@@ -33,8 +33,9 @@ color:${GlobalColors.darkBlue};
 	&:hover {
 		border: 1px solid ${GlobalColors.darkBlue};
 	}
+	${({ disabled }) => disabled && `pointer-events: none; cursor: not-allowed;`};
 `;
-export const QUAnswerLetter = styled.div<{ checked?: boolean; correct?: boolean; showCorrect?: boolean }>`
+export const QUAnswerLetter = styled.div<{ checked?: boolean; correct?: boolean; showCorrect?: boolean; disabled?: boolean }>`
 	min-width: 40px;
 	max-width: 40px;
 	min-height: 40px;
@@ -60,8 +61,8 @@ export const QUAnswerLetter = styled.div<{ checked?: boolean; correct?: boolean;
 			color:${GlobalColors.answerGreen};
 `
 			: showCorrect &&
-			  !correct &&
-			  `
+				!correct &&
+				`
 			  border: 2px solid ${GlobalColors.answerRed};
 			  color:${GlobalColors.answerRed};
 `}

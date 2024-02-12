@@ -8,8 +8,9 @@ export interface QUAnswerItemProps {
 	content?;
 	onClick?;
 	checked?;
+	disabled?;
 }
-export const QUAnswerItem: React.FC<QUAnswerItemProps> = ({ AnswerIndex = 0, showCorrect, correct, content, onClick, checked }) => {
+export const QUAnswerItem: React.FC<QUAnswerItemProps> = ({ AnswerIndex = 0, showCorrect, correct, content, onClick, checked, disabled }) => {
 	let letter = 'A';
 	switch (AnswerIndex) {
 		case 0:
@@ -30,7 +31,7 @@ export const QUAnswerItem: React.FC<QUAnswerItemProps> = ({ AnswerIndex = 0, sho
 	}
 
 	return (
-		<QUAnswerItemContainer onClick={onClick} checked={checked} showCorrect={showCorrect} correct={correct}>
+		<QUAnswerItemContainer onClick={onClick} checked={checked} showCorrect={showCorrect} correct={correct} disabled={disabled}>
 			<QUAnswerLetter showCorrect={showCorrect} correct={correct} checked={checked}>
 				{letter}
 			</QUAnswerLetter>
