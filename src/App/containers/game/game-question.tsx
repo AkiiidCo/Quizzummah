@@ -23,7 +23,7 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 	};
 
 	const selectedAnswer = async (answerId) => {
-		if (!onlyDisplay) {
+		if (!onlyDisplay && !answeredId) {
 			setAnsweredId(answerId);
 			await QRequest.post('/gamerun/submit', { answer: answerId });
 		}
@@ -43,7 +43,16 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 					<GameDescriptionLabel>Answers</GameDescriptionLabel>
 					<GameAnswersWrapper>
 						{gameState.question?.answers.map((answer, index) => {
-							return <QUAnswerItem AnswerIndex={index} content={answer.answer} onClick={() => selectedAnswer(answer.id)} checked={answeredId === answer.id} key={answer.id} />;
+							return (
+								<QUAnswerItem
+									AnswerIndex={index}
+									content={answer.answer}
+									onClick={() => selectedAnswer(answer.id)}
+									checked={answeredId === answer.id}
+									key={answer.id}
+									disabled={!!answeredId}
+								/>
+							);
 						})}
 					</GameAnswersWrapper>
 				</div>
