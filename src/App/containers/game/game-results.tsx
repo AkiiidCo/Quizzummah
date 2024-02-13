@@ -13,7 +13,7 @@ export const GameResultsScreen = ({ gameState }: { gameState: any }): ReactEleme
 		WSManager.disconnect();
 		WSManager.removeAllListeners();
 		const audio = new Audio('/assets/audio/epic-hybrid.mp3');
-		audio.volume = 0.5;
+		audio.volume = 0.1;
 		audio.play();
 		const resultsTimeout = setTimeout(() => {
 			setShowResults(true);

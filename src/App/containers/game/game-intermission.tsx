@@ -4,6 +4,7 @@ import { RootState, useAppSelector } from '../../redux/store';
 import Countdown from 'react-countdown';
 import { GameAnswersWrapper, GameDescriptionLabel, GameQuestion } from './game.styles';
 import { QUAnswerItem } from '../../components/qu-answer-item/qu-answer-item';
+import Markdown from 'markdown-to-jsx';
 
 export const GameIntermissionScreen = ({ gameState, players }: { gameState: any; players: string[] }): ReactElement => {
 	const { host } = useAppSelector((state: RootState) => state.game);
@@ -43,7 +44,7 @@ export const GameIntermissionScreen = ({ gameState, players }: { gameState: any;
 			{gameState.question?.proof && (
 				<div>
 					<div>Proof</div>
-					<div>{gameState.question?.proof}</div>
+					<Markdown children={gameState.question?.proof} />
 				</div>
 			)}
 			{/* <div>

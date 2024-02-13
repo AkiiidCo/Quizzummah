@@ -26,7 +26,7 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 		if (!onlyDisplay && !answeredId) {
 			// Play audio
 			const audio = new Audio('/assets/audio/mouse-click.mp3');
-			audio.volume = 0.5;
+			audio.volume = 0.1;
 			audio.play();
 			setAnsweredId(answerId);
 			await QRequest.post('/gamerun/submit', { answer: answerId });
