@@ -51,9 +51,9 @@ export const GameIntermissionScreen = ({ gameState, players }: { gameState: any;
 			</div> */}
 			<div>
 				<div>Scores:</div>
-				{players.map((player) => (
+				{players.map((player, index) => (
 					<div>
-						{player} - {gameState.scores?.[player] ?? 0}
+						Place {index + 1}: {player} - {gameState.scores?.[player] ?? 0}
 					</div>
 				))}
 			</div>

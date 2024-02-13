@@ -24,6 +24,10 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 
 	const selectedAnswer = async (answerId) => {
 		if (!onlyDisplay && !answeredId) {
+			// Play audio
+			const audio = new Audio('/assets/audio/mouse-click.mp3');
+			audio.volume = 0.5;
+			audio.play();
 			setAnsweredId(answerId);
 			await QRequest.post('/gamerun/submit', { answer: answerId });
 		}
