@@ -61,6 +61,9 @@ export const Game = () => {
 			case 'gamestate':
 				if (message.page) {
 					setPage(message.page);
+					const audio = new Audio('/assets/audio/movement-swipe-whoosh.mp3');
+					audio.volume = 0.5;
+					audio.play();
 				}
 				setGameState(message);
 				break;
