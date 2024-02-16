@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState } from 'react';
+import Countdown from 'react-countdown';
+import { Timer } from '../../Images';
 import { QUAnswerItem } from '../../components/qu-answer-item/qu-answer-item';
 import { QUButton } from '../../components/qu-button/qu-button';
 import { RootState, useAppSelector } from '../../redux/store';
 import QRequest, { proceedGame } from '../../services/QRequest';
-import { GameAnswersWrapper, GameContainer, GameDescriptionLabel, GameQuestion, GameQuestionWrapper, GamesAnswersNextBtnWrapper } from './game.styles';
-import Countdown from 'react-countdown';
+import { GameContainer, GameQuestion, GamesAnswersNextBtnWrapper } from './game.styles';
 import { toast } from 'react-toastify';
 
 export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElement => {
@@ -42,19 +43,23 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 		}
 	};
 
-	const countdownRenderer = ({ minutes, seconds, completed }) => <span>{completed ? <span>Time's up!</span> : <span>{seconds < 10 ? `0${seconds}` : seconds} seconds</span>}</span>;
-
+	const countdownRenderer = ({ minutes, seconds, completed }) => (
+		<div className="relative flex w-[150px] h-[150px] items-center justify-center ml-auto mr-auto mt-4">
+			<img className="absolute w-full h-full z-10 inset-0" src={Timer} />
+			<div className="relative z-20 mt-8 text-white1 text-lg">{completed ? <span>Time's up!</span> : <span>{seconds < 10 ? `0${seconds}` : seconds}</span>}</div>
+		</div>
+	);
 	return (
 		<GameContainer>
-			<GameQuestionWrapper>
+			<div className="flex flex-col gap-4">
 				<div>
-					<GameDescriptionLabel>
-						{username} - {room}
-					</GameDescriptionLabel>
-					<GameDescriptionLabel>Question Number {gameState.questionNumber + 1}</GameDescriptionLabel>
+					<div className="text-sm">
+						username: <span className="font-bold">{username}</span> - Room code: <span className="font-bold">{room}</span>
+					</div>
+					<div className="text-xl font-thin mt-2">Question Number {gameState.questionNumber + 1}</div>
 					<GameQuestion host={host && onlyDisplay}>{gameState.question?.question}</GameQuestion>
-					<GameDescriptionLabel>Answers</GameDescriptionLabel>
-					<GameAnswersWrapper>
+					<div className="text-xl font-thin mt-2">Answers</div>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						{gameState.question?.answers.map((answer, index) => {
 							return (
 								<QUAnswerItem
@@ -67,13 +72,13 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 								/>
 							);
 						})}
-					</GameAnswersWrapper>
+					</div>
 				</div>
-				{gameState.timeEnds && <Countdown renderer={countdownRenderer} date={gameState.timeEnds} onComplete={next} />}
-				<GamesAnswersNextBtnWrapper>
-					{host && onlyDisplay && <QUButton disabled={loading} onClick={next} title={gameState.questionNumber < gameState.maxQuestions ? 'Next question' : 'Finish'} />}
-				</GamesAnswersNextBtnWrapper>
-			</GameQuestionWrapper>
+			</div>
+			{gameState.timeEnds && <Countdown renderer={countdownRenderer} date={gameState.timeEnds} onComplete={next} />}
+			<GamesAnswersNextBtnWrapper>
+				{host && onlyDisplay && <QUButton disabled={loading} onClick={next} title={gameState.questionNumber < gameState.maxQuestions ? 'Next question' : 'Finish'} />}
+			</GamesAnswersNextBtnWrapper>
 		</GameContainer>
 	);
 };

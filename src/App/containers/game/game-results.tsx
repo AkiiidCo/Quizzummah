@@ -1,8 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react';
-import { GamesAnswersNextBtnWrapper } from './game.styles';
-import { QUButton } from '../../components/qu-button/qu-button';
 import { useNavigate } from 'react-router';
+import { Swipeleft, Trophy } from '../../Images';
+import { QUButton } from '../../components/qu-button/qu-button';
+import { QUPlayeritem } from '../../components/qu-player-item/qu-player-item';
 import WSManager from '../../managers/ws.manager';
+import { GameContainer } from './game.styles';
 
 export const GameResultsScreen = ({ gameState }: { gameState: any }): ReactElement => {
 	const navigation = useNavigate();
@@ -29,22 +31,24 @@ export const GameResultsScreen = ({ gameState }: { gameState: any }): ReactEleme
 	};
 
 	return (
-		<div>
-			<div>Game Results Screen</div>
+		<GameContainer>
+			<div className="flex flex-col items-center gap-8">
+				<img src={Trophy} />
+				<div className="text-3xl text-center">Game Results Screen</div>
 
-			<div>
-				<div>Scores:</div>
-				{showResults &&
-					Object.keys(gameState.scores).map((player, index) => (
-						<div>
-							Place {index + 1}: {player} - {gameState.scores?.[player] ?? 0}
-						</div>
-					))}
+				<div className="flex flex-col gap-2 w-full max-w-[500px]">
+					{showResults &&
+						Object.keys(gameState.scores).map((player, index) => (
+							<div>
+								<QUPlayeritem playerName={player} playerPoints={gameState.scores?.[player] ?? 0} showBadges Place={index + 1} />
+							</div>
+						))}
+				</div>
+
+				<div className="ml-auto mr-auto min-w-[150px]">
+					<QUButton LeftIcon={<img src={Swipeleft} />} onClick={home} title={'Home'} />
+				</div>
 			</div>
-
-			<GamesAnswersNextBtnWrapper>
-				<QUButton onClick={home} title={'Home'} />
-			</GamesAnswersNextBtnWrapper>
-		</div>
+		</GameContainer>
 	);
 };
