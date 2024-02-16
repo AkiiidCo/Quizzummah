@@ -4,8 +4,9 @@ import { Timer } from '../../Images';
 import { QUAnswerItem } from '../../components/qu-answer-item/qu-answer-item';
 import { QUButton } from '../../components/qu-button/qu-button';
 import { RootState, useAppSelector } from '../../redux/store';
-import QRequest from '../../services/QRequest';
+import QRequest, { proceedGame } from '../../services/QRequest';
 import { GameContainer, GameQuestion, GamesAnswersNextBtnWrapper } from './game.styles';
+import { toast } from 'react-toastify';
 
 export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElement => {
 	const { room, host, onlyDisplay, username } = useAppSelector((state: RootState) => state.game);
@@ -19,7 +20,9 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 	const next = async () => {
 		if (host) {
 			setLoading(true);
-			await QRequest.get('/gamerun/proceed');
+			try {
+				await proceedGame();
+			} catch (err) {}
 		}
 	};
 
@@ -30,7 +33,13 @@ export const GameQuestionScreen = ({ gameState }: { gameState: any }): ReactElem
 			audio.volume = 0.1;
 			audio.play();
 			setAnsweredId(answerId);
-			await QRequest.post('/gamerun/submit', { answer: answerId });
+			try {
+				await QRequest.post('/gamerun/submit', { answer: answerId });
+			} catch (err) {
+				setAnsweredId(null);
+				console.error('Could not submit error: ', err);
+				toast.error('Could not submit answer, please try again');
+			}
 		}
 	};
 

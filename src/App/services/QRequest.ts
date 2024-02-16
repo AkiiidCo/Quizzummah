@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 if (process.env.NODE_ENV !== 'production') {
 	sessionStorage.setItem('token', import.meta.env.VITE_TOKEN);
@@ -7,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
 const QRequest = axios.create({
 	baseURL: import.meta.env.VITE_API_SERVER,
 	method: 'GET',
+	timeout: 10000,
 });
 
 QRequest.interceptors.request.use((config) => {
@@ -20,5 +22,27 @@ QRequest.interceptors.request.use((config) => {
 	}
 	return config;
 });
+
+// This handles auto retrying up to 3 times
+let proceedRetries = 0;
+let proceedTimeout: ReturnType<typeof setTimeout>;
+export async function proceedGame() {
+	try {
+		clearTimeout(proceedTimeout);
+		await QRequest.get('/gamerun/proceed');
+	} catch (err) {
+		if (proceedRetries > 3) {
+			console.error('Proceed game err not trying again: ', err);
+			toast.error('Could not proceed with game, please try again later.');
+			throw err;
+		} else {
+			console.warn('Proceed game err is trying again: ', err);
+			proceedRetries++;
+			proceedTimeout = setTimeout(() => {
+				proceedGame();
+			}, proceedRetries * 1000);
+		}
+	}
+}
 
 export default QRequest;

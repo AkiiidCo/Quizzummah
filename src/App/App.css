@@ -35,3 +35,12 @@
 		transform: rotate(360deg);
 	}
 }
+
+input {
+	border: 2px solid #282c56;
+	padding: 16px;
+	font-size: 1rem;
+	border-radius: 50px;
+	outline-color: #2992ce;
+	min-width: 250px;
+}
