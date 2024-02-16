@@ -2,17 +2,7 @@ import { ReactElement } from 'react';
 import { QUAvatar } from '../../components/qu-avatar/qu-avatar';
 import { RootState, useAppSelector } from '../../redux/store';
 import QRequest from '../../services/QRequest';
-import {
-	GameAvatarContainer,
-	GameAvatarItem,
-	GameContainer,
-	GameDescription,
-	GameDescriptionContainer,
-	GameDescriptionLabel,
-	GameHeaderContainer,
-	GameTopBottpmSpacer,
-	MasjidIllustartion,
-} from './game.styles';
+import { GameAvatarContainer, GameAvatarItem, GameContainer, GameDescription, GameDescriptionContainer, GameDescriptionLabel, GameTopBottpmSpacer, MasjidIllustartion } from './game.styles';
 import { QUButton } from '../../components/qu-button/qu-button';
 import { Masjid } from '../../Images';
 
@@ -27,7 +17,7 @@ export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement
 
 	return (
 		<GameContainer>
-			<GameHeaderContainer>
+			<div className="flex items-center justify-center gap-2 p-4 flex-wrap">
 				<MasjidIllustartion src={Masjid} />
 				<GameDescriptionContainer>
 					<GameDescriptionLabel>Go to</GameDescriptionLabel>
@@ -43,7 +33,7 @@ export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement
 						</GameTopBottpmSpacer>
 					)}
 				</GameDescriptionContainer>
-			</GameHeaderContainer>
+			</div>
 			<GameAvatarContainer>
 				{players.map((item) => (
 					<GameAvatarItem key={item}>
