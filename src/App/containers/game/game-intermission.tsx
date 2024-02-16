@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import QRequest from '../../services/QRequest';
+import QRequest, { proceedGame } from '../../services/QRequest';
 import { RootState, useAppSelector } from '../../redux/store';
 import Countdown from 'react-countdown';
 import { GameAnswersWrapper, GameDescriptionLabel, GameQuestion } from './game.styles';
@@ -14,7 +14,9 @@ export const GameIntermissionScreen = ({ gameState, players }: { gameState: any;
 	const next = async () => {
 		if (host) {
 			setLoading(true);
-			await QRequest.get('/gamerun/proceed');
+			try {
+				await proceedGame();
+			} catch (err) {}
 		}
 	};
 

@@ -6,6 +6,7 @@ import QRequest from '../../services/QRequest';
 import { BismiAllah, Creategame, LogoQuizzUmmah, Masjid, Play } from '../../Images';
 import { QUButton } from '../../components/qu-button/qu-button';
 import { HomeContainer, HomeHero, HomeRightSection, HomeInputs, HomeFooter, HomeLink } from './home.styles';
+import { toast } from 'react-toastify';
 
 export const Home = (): ReactElement => {
 	const dispatch = useAppDispatch();
@@ -16,33 +17,49 @@ export const Home = (): ReactElement => {
 	const [room, setRoom] = useState('');
 
 	const createGame = async () => {
-		setLoading(true);
-		const settings = {
-			displayOnly: false,
-			username,
-			avatar,
-		};
-		const { data } = await QRequest.post('/game/create', settings);
+		try {
+			setLoading(true);
+			const settings = {
+				displayOnly: false,
+				username,
+				avatar,
+				intermissionTime: 10000,
+				questionTime: 20000,
+				questionAmount: 10,
+			};
 
-		dispatch(updateGame({ ...data }));
-		sessionStorage.setItem('gameToken', data.gameToken);
-		sessionStorage.setItem('room', data.room);
-		localStorage.setItem('username', data.username);
+			const { data } = await QRequest.post('/game/create', settings);
 
-		setLoading(false);
-		navigation('game', { state: { page: data.page, players: data.players } });
+			dispatch(updateGame({ ...data }));
+			sessionStorage.setItem('gameToken', data.gameToken);
+			sessionStorage.setItem('room', data.room);
+			localStorage.setItem('username', data.username);
+
+			setLoading(false);
+			navigation('game', { state: { page: data.page, players: data.players } });
+		} catch (err) {
+			setLoading(false);
+			console.error('Could not create game, please try again: ', err);
+			toast.error('Could not create game, please try again');
+		}
 	};
 
 	const openJoinGame = async () => {
-		setLoading(true);
-		const { data } = await QRequest.post('/game/join', { room, username, avatar });
+		try {
+			setLoading(true);
+			const { data } = await QRequest.post('/game/join', { room, username, avatar });
 
-		dispatch(updateGame(data));
-		sessionStorage.setItem('gameToken', data.gameToken);
-		localStorage.setItem('username', data.username);
+			dispatch(updateGame(data));
+			sessionStorage.setItem('gameToken', data.gameToken);
+			localStorage.setItem('username', data.username);
 
-		setLoading(false);
-		navigation('game', { state: { page: data.page, players: data.players } });
+			setLoading(false);
+			navigation('game', { state: { page: data.page, players: data.players } });
+		} catch (err) {
+			setLoading(false);
+			console.error('Could not join game, please try again: ', err);
+			toast.error('Could not join game, please try again');
+		}
 	};
 
 	return (

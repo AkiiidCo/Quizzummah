@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { QUAvatar } from '../../components/qu-avatar/qu-avatar';
 import { RootState, useAppSelector } from '../../redux/store';
-import QRequest from '../../services/QRequest';
+import QRequest, { proceedGame } from '../../services/QRequest';
 import {
 	GameAvatarContainer,
 	GameAvatarItem,
@@ -21,7 +21,9 @@ export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement
 
 	const startGame = async () => {
 		if (host) {
-			await QRequest.get('/gamerun/proceed');
+			try {
+				await proceedGame();
+			} catch (err) {}
 		}
 	};
 
