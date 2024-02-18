@@ -38,9 +38,9 @@ export const GameResultsScreen = ({ gameState }: { gameState: any }): ReactEleme
 
 				<div className="flex flex-col gap-2 w-full max-w-[500px]">
 					{showResults &&
-						Object.keys(gameState.scores).map((player, index) => (
+						gameState.scores.map((player: { username: string; score: number }, index) => (
 							<div>
-								<QUPlayeritem playerName={player} playerPoints={gameState.scores?.[player] ?? 0} showBadges Place={index + 1} />
+								<QUPlayeritem playerName={player.username} playerPoints={player.score ?? 0} showBadges Place={index + 1} />
 							</div>
 						))}
 				</div>

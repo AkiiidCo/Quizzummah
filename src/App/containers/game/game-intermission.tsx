@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { proceedGame } from '../../services/QRequest';
 import { RootState, useAppSelector } from '../../redux/store';
 import Countdown from 'react-countdown';
-import { GameAnswersWrapper, GameContainer, GameDescriptionLabel, GameQuestion } from './game.styles';
+import { GameContainer, GameDescriptionLabel, GameQuestion } from './game.styles';
 import { QUAnswerItem } from '../../components/qu-answer-item/qu-answer-item';
 import Markdown from 'markdown-to-jsx';
 import { QUPlayeritem } from '../../components/qu-player-item/qu-player-item';
@@ -77,8 +77,8 @@ export const GameIntermissionScreen = ({ gameState, players }: { gameState: any;
 					<div>
 						<div className="text-sm">Score</div>
 						<div className="flex flex-col gap-2">
-							{players.map((player, index) => {
-								const playerStat = gameState.submissions?.[gameState.questionNumber]?.[player];
+							{gameState.scores.map((player: { username: string; score: number }, index) => {
+								const playerStat = gameState.submissions?.[gameState.questionNumber]?.[player.username];
 								const answerIdx = mapAnswerIdToIdx[playerStat?.answer]?.index;
 								return (
 									<QUPlayeritem
@@ -87,8 +87,8 @@ export const GameIntermissionScreen = ({ gameState, players }: { gameState: any;
 										showCorrect
 										correct={playerStat?.correct ?? false}
 										AnswerIndex={answerIdx}
-										playerName={player}
-										playerPoints={gameState.scores?.[player] ?? 0}
+										playerName={player.username}
+										playerPoints={player.score ?? 0}
 									/>
 								);
 							})}
