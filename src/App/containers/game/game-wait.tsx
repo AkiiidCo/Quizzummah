@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { QUAvatar } from '../../components/qu-avatar/qu-avatar';
 import { RootState, useAppSelector } from '../../redux/store';
-import QRequest, { proceedGame } from '../../services/QRequest';
+import { proceedGame } from '../../services/QRequest';
 import { GameAvatarContainer, GameAvatarItem, GameContainer, GameDescription, GameDescriptionContainer, GameDescriptionLabel, GameTopBottpmSpacer, MasjidIllustartion } from './game.styles';
 import { QUButton } from '../../components/qu-button/qu-button';
 import { Masjid } from '../../Images';
