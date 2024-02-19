@@ -47,7 +47,7 @@ export const Home = (): ReactElement => {
 		} catch (err) {
 			setLoading(false);
 			console.error('Could not create game, please try again: ', err);
-			toast.error('Could not create game, please try again');
+			toast.error('Could not create game. Error: ' + err.message);
 		}
 	};
 
@@ -65,7 +65,7 @@ export const Home = (): ReactElement => {
 		} catch (err) {
 			setLoading(false);
 			console.error('Could not join game, please try again: ', err);
-			toast.error('Could not join game, please try again');
+			toast.error('Could not join game. ' + err.message);
 		}
 	};
 

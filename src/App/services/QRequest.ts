@@ -33,7 +33,7 @@ export async function proceedGame() {
 	} catch (err) {
 		if (proceedRetries > 3) {
 			console.error('Proceed game err not trying again: ', err);
-			toast.error('Could not proceed with game, please try again later.');
+			toast.error('Could not proceed with game, please try again later. Error: ' + err.message);
 			throw err;
 		} else {
 			console.warn('Proceed game err is trying again: ', err);
