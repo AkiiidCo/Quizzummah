@@ -8,10 +8,15 @@ import { GlobalColors, Rules } from './styles/global-styles';
 import { Router } from './router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import ReactGA from 'react-ga4';
 
 function App() {
 	const [_t, i18n] = useTranslation();
 	const language = useAppSelector((state: RootState) => state.settings.language);
+
+	useEffect(() => {
+		ReactGA.initialize('G-HPW5JN9T3P');
+	}, []);
 
 	useEffect(() => {
 		// i18n.changeLanguage(language);

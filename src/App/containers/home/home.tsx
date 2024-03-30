@@ -7,6 +7,7 @@ import { BismiAllah, Creategame, LogoQuizzUmmah, Masjid, Play } from '../../Imag
 import { QUButton } from '../../components/qu-button/qu-button';
 import { HomeContainer, HomeHero, HomeRightSection, HomeInputs, HomeFooter, HomeLink } from './home.styles';
 import { toast } from 'react-toastify';
+import ReactGA from 'react-ga4';
 
 export const Home = (): ReactElement => {
 	const dispatch = useAppDispatch();
@@ -34,6 +35,12 @@ export const Home = (): ReactElement => {
 
 			const { data } = await QRequest.post('/game/create', settings);
 
+			ReactGA.event({
+				category: 'game',
+				action: 'create',
+				label: data.room,
+			});
+
 			dispatch(updateGame({ ...data }));
 			sessionStorage.setItem('gameToken', data.gameToken);
 			sessionStorage.setItem('room', data.room);
@@ -55,6 +62,12 @@ export const Home = (): ReactElement => {
 		try {
 			setLoading(true);
 			const { data } = await QRequest.post('/game/join', { room, username, avatar });
+
+			ReactGA.event({
+				category: 'game',
+				action: 'join',
+				label: room,
+			});
 
 			dispatch(updateGame(data));
 			sessionStorage.setItem('gameToken', data.gameToken);

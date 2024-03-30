@@ -5,6 +5,7 @@ import { proceedGame } from '../../services/QRequest';
 import { GameAvatarContainer, GameAvatarItem, GameContainer, GameDescription, GameDescriptionContainer, GameDescriptionLabel, GameTopBottpmSpacer, MasjidIllustartion } from './game.styles';
 import { QUButton } from '../../components/qu-button/qu-button';
 import { Masjid } from '../../Images';
+import ReactGA from 'react-ga4';
 
 export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement => {
 	const { room, host, username } = useAppSelector((state: RootState) => state.game);
@@ -12,6 +13,12 @@ export const GameWaitScreen = ({ players }: { players: string[] }): ReactElement
 	const startGame = async () => {
 		if (host) {
 			try {
+				ReactGA.event({
+					category: 'game',
+					action: 'start',
+					label: room,
+					value: players.length,
+				});
 				await proceedGame();
 			} catch (err) {}
 		}
