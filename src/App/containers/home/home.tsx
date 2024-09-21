@@ -117,13 +117,11 @@ export const Home = (): ReactElement => {
 				</HeaderSettingsBtn> */}
 					</div>
 					<HomeHero>
-						<div className="flex-shrink  flex-[300px] w-300 flex-row items-center hidden md:flex">
+						<div className="flex-shrink  flex-[300px] w-300 flex flex-col items-center md:flex">
 							<img src={Masjid} className="w-full" />
 						</div>
 						<HomeRightSection>
-							<img src={LogoQuizzUmmah} className=" w-3/5 mb-12 md:w-full" />
-
-							<div className="items-center text-darkBlue">Enter name</div>
+							<img src={LogoQuizzUmmah} className=" w-3/5 mb-4 md:w-full" />
 							<HomeInputs>
 								<input autoFocus disabled={loading} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Name" />
 							</HomeInputs>
@@ -143,6 +141,12 @@ export const Home = (): ReactElement => {
 							</div>
 						</HomeRightSection>
 					</HomeHero>
+					<div className="text-center mt-10">
+						Contribute to quizzummah by{' '}
+						<a className="text-darkBlue90 font-bold !underline" href="/submit-question">
+							Submiting a question
+						</a>
+					</div>
 				</>
 			)}
 			{/* <HomeFooter>
