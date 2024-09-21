@@ -54,10 +54,10 @@ export const SubmitQuestion = (): ReactElement => {
 					<h1 className="text-5xl text-center mt-4 mb-8 font-bold">Submit a question</h1>
 					<div className="flex flex-col gap-1">
 						<label className="text-darkBlue/50">Enter question</label>
-						<input autoFocus placeholder="Enter Question" value={questionObj.question} onChange={(e) => setQuestionObj({ ...questionObj, question: e.target.value })} />
+						<input autoFocus placeholder="How many Surahs are in the Quran?" value={questionObj.question} onChange={(e) => setQuestionObj({ ...questionObj, question: e.target.value })} />
 					</div>
 					<div className="flex flex-col gap-1">
-						<label className="text-darkBlue/50">Category</label>
+						<label className="text-darkBlue/50">Select a category</label>
 						<select value={questionObj.category} onChange={(e) => setQuestionObj({ ...questionObj, category: e.target.value })} className="capitalize">
 							<option value="prophets">prophets</option>
 							<option value="muhammad">muhammad</option>
@@ -95,9 +95,9 @@ export const SubmitQuestion = (): ReactElement => {
 					<div className="flex flex-col gap-2 mb-10">
 						<h2 className="text-xl font-bold">Multiple Answers</h2>
 						<div className="flex flex-col gap-1">
-							<label className="text-darkBlue/50">1 First Answer</label>
+							<label className="text-darkBlue/50">Answer 1</label>
 							<div className="flex items-center gap-2 flex-wrap">
-								<input className="flex-1" placeholder="Enter the answer number 1" value={answer1} onChange={(e) => setAnswer1(e.target.value)} />
+								<input className="flex-1" placeholder="Enter answer number 1" value={answer1} onChange={(e) => setAnswer1(e.target.value)} />
 								<input
 									className="hidden"
 									type="radio"
@@ -128,9 +128,9 @@ export const SubmitQuestion = (): ReactElement => {
 							</div>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label className="text-darkBlue/50">2 Second Answer</label>
+							<label className="text-darkBlue/50">Answer 2</label>
 							<div className="flex items-center gap-2 flex-wrap">
-								<input className="flex-1" placeholder="Enter the answer number 2" value={answer2} onChange={(e) => setAnswer2(e.target.value)} />
+								<input className="flex-1" placeholder="Enter answer number 2" value={answer2} onChange={(e) => setAnswer2(e.target.value)} />
 								<input
 									className="hidden"
 									type="radio"
@@ -161,9 +161,9 @@ export const SubmitQuestion = (): ReactElement => {
 							</div>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label className="text-darkBlue/50">3 Third Answer</label>
+							<label className="text-darkBlue/50">Answer 3</label>
 							<div className="flex items-center gap-2 flex-wrap">
-								<input className="flex-1" placeholder="Enter the answer number 3" value={answer3} onChange={(e) => setAnswer3(e.target.value)} />
+								<input className="flex-1" placeholder="Enter answer number 3" value={answer3} onChange={(e) => setAnswer3(e.target.value)} />
 								<input
 									className="hidden"
 									type="radio"
@@ -194,9 +194,9 @@ export const SubmitQuestion = (): ReactElement => {
 							</div>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label className="text-darkBlue/50">4 Fourth Answer</label>
+							<label className="text-darkBlue/50">Answer 4</label>
 							<div className="flex items-center gap-2 flex-wrap">
-								<input className="flex-1" placeholder="Enter the answer number 4" value={answer4} onChange={(e) => setAnswer4(e.target.value)} />
+								<input className="flex-1" placeholder="Enter answer number 4" value={answer4} onChange={(e) => setAnswer4(e.target.value)} />
 								<input
 									className="hidden"
 									type="radio"
@@ -229,7 +229,12 @@ export const SubmitQuestion = (): ReactElement => {
 						<div className="flex flex-col gap-1">
 							<h2 className="text-xl font-bold">Proof about the correct answer</h2>
 							<label className="text-darkBlue/50">Proof</label>
-							<input placeholder="Enter Proof" value={questionObj.proof} onChange={(e) => setQuestionObj({ ...questionObj, proof: e.target.value })} />
+							<input
+								placeholder="Example: Sahih Bukhari (1938): The Prophet (ﷺ) was cupped while he was in the state of lhram"
+								className="w-full"
+								value={questionObj.proof}
+								onChange={(e) => setQuestionObj({ ...questionObj, proof: e.target.value })}
+							/>
 						</div>
 						<QUButton
 							disabled={!questionObj.question || !questionObj.category || !questionObj.difficulty || !answer1 || !answer2 || !answer3 || !answer4}
